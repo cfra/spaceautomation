@@ -1,5 +1,9 @@
 #!/usr/bin/env python
 
+# This is a very crude script which receives osc commands and passes those
+# on to the ethernet/can gateway so it controls the light
+
+import hashlib
 import liblo
 import socket
 import struct
@@ -36,7 +40,7 @@ class LightServer(object):
             self.handle_dali_lamp(path[len(prefix):], args, types, src)
         else:
             raise self.Unknown()
-
+            
     def handle_dali_lamp(self, path, args, types, src):
         path_parts = path.split('/')
         while len(path_parts) and not path_parts[0]:
@@ -70,17 +74,32 @@ class LightServer(object):
         if brightness >= 255:
             brightness = 254
 
+	buf = chr(brightness)
+        addr = 0xcc080440 + lamp
+
+	buf = struct.pack('>IB', addr, len(buf)) + buf + '\x00' * (3 + 8 - len(buf))
+
         src = '\x00\x04\x23\xb6\xde\xe4'
         dst = '\xff\x3a\xf6CAN'
         proto = 0x88b7
         oui = '\x00\x80\x41'
         subp = 0xaaaa
-        typ = 2
-        buf = struct.pack('>6s6sH3sHB', dst, src, proto, oui, subp, typ)
+        typ = 3
 
-        addr = 0xcc080440 + lamp
-        buf += struct.pack('>IBB', addr, 1, brightness)
+	buf = struct.pack('<BII', typ, 0, 0) + buf
+	key = ''.join([chr(i) for i in [
+		0x2f, 0x5d, 0xb5, 0xe4, 0x59, 0x6d, 0xc5, 0xf1, 0xb0, 0xf4,
+		0xc3, 0xee, 0x8a, 0xc8, 0xff, 0x06, 0xbc, 0x28, 0x54, 0x08,
+		0xa6, 0xc2, 0x96, 0x72, 0xd9, 0x0d, 0x22, 0x76, 0xd1, 0x98,
+		0x0a, 0xdb, 0xca, 0xfe, 0xba, 0xbe, 0xde, 0xad, 0xbe, 0xef,
+	]])
 
+	dgst = hashlib.sha256()
+	# dgst.update(key)
+	dgst.update(buf)
+
+	buf += dgst.digest()
+	buf = struct.pack('>6s6sH3sH', dst, src, proto, oui, subp) + buf
         self.raw_socket.sendto(buf, (self.interface, 0))
 
 if __name__ == '__main__':
