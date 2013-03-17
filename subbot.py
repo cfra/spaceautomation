@@ -5,6 +5,8 @@ import json, time
 import traceback
 import liblo
 import urllib2
+import sys
+import contextlib
 
 import settings
 
@@ -146,7 +148,8 @@ class TestBot(irc.bot.SingleServerIRCBot):
     def refresh(self):
         curtime = time.time()
         try:
-            sdata = json.load(file('/home/services/http/subcan.json', 'r'))
+            with contextlib.closing(urllib2.urlopen('http://taifun.local.sublab.org/subcan.json')) as json_stream:
+                sdata = json.load(json_stream)
             door = sdata[u'door.lock']
 
             if door[u'ts'] < curtime - 120:
@@ -164,9 +167,15 @@ class TestBot(irc.bot.SingleServerIRCBot):
         self.update_nick()
         self.ircobj.execute_delayed(5, self.refresh)
 
-def main():
-    bot = TestBot('#sublab', 'sublab', '172.22.24.1', 6667)
+def main(nickname, channel):
+    bot = TestBot(channel, nickname, '172.22.24.1', 6667)
     bot.start()
 
 if __name__ == "__main__":
-    main()
+    if sys.argv[0] == 'subbot.py':
+        nickname = 'sublab'
+        channel = '#sublab'
+    else:
+        nickname = 'sublab2'
+        channel = '#sublab2'
+    main(nickname, channel)
