@@ -165,7 +165,7 @@ class Frame(object):
 				stats.append(unpack('<I', data[:4])[0])
 				data = data[4:]
 			spretty = StatsTuple._make(stats[:len(StatsTuple._fields)])
-			print '\033[33m%s stats: %s\033[m' % (ts(), repr(spretty))
+			print >>debug_log, '%s stats: %s' % (ts(), repr(spretty))
 			raise NotACANFrame('stats frame')
 
 		if typ != 0x03:
@@ -211,7 +211,7 @@ def repower_r0ket():
 		if h['dev'].idVendor == 0x050f and h['dev'].idProduct == 0x0003:
 			break
 	else:
-		print 'could not find USB hub!'
+		print >>sys.stderr, 'could not find USB hub!'
 		return
 
 	with USBHandle(h['dev']) as uh:
@@ -220,14 +220,13 @@ def repower_r0ket():
 
 		req = usb.REQ_CLEAR_FEATURE
 		uh.controlMsg(requestType = hub_ctrl.USB_RT_PORT, request = req, value = feat, index = index, buffer = None, timeout = 1000)
-		print '\033[31;1m%s: port powered off.\033[m' % (ts(), )
+		print >>debug_log, '%s: port powered off.' % (ts(), )
 		sleep(2)	
 		req = usb.REQ_SET_FEATURE
 		uh.controlMsg(requestType = hub_ctrl.USB_RT_PORT, request = req, value = feat, index = index, buffer = None, timeout = 1000)
-		print '\033[31;1m%s: port powered on.\033[m' % (ts(), )
+		print >>debug_log, '%s: port powered on.' % (ts(), )
 
-	with open('/var/log/ethcan.log', 'a') as logf:
-		logf.write('%s: r0ket powercycled\n' % (ts(), ))
+	print >>sys.stderr, 'r0ket powercycled'
 
 def main(interface):
 	poller = select.poll()
@@ -251,17 +250,17 @@ def main(interface):
 			pkt = Frame(data)
 		except NotACANFrame, e:
 			if str(e) != 'stats frame':
-				print e
+				traceback.print_exc()
 			continue
 		except InvalidCANFrame, e:
-			print e
+			traceback.print_exc()
 			continue
 	
 		scf = SubCANFrame.create(pkt)
 		if scf is not None:
 			scf.process()
 	
-		print ts(), addr[0], pkt
+		print >>debug_log, ts(), addr[0], pkt
 	
 		rd = {}
 		for d in devices:
@@ -279,4 +278,5 @@ if __name__ == '__main__':
 	mreq = pack('@iHH8s', ifindex, 0, 6, '\xff\x3a\xf6CAN\x00\x00')
 	s.setsockopt(263, 1, mreq)
 
+	debug_log = open(settings.ethcan_log, 'a', buffering=1)
 	main(interface)
