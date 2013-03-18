@@ -25,6 +25,10 @@ class SubCANDevice(object):
 		s.actorval = None
 		s.actorupd = None
 		s.actorchg = None
+	def dict(s):
+		rv = {}
+		rv['addr'] = s.addr
+		return rv
 
 class SubCANBool(SubCANDevice):
 	def __init__(s, addr, name, falseval, trueval):
@@ -35,7 +39,8 @@ class SubCANBool(SubCANDevice):
 			return 'None'
 		return s.vals[s.lastval & 1]
 	def dict(s):
-		rv = {}
+		rv = SubCANDevice.dict(s)
+		rv['klass'] = 'beancounter'
 		if s.lastval is not None:
 			rv['raw'] = s.lastval
 			rv['value'] = bool(s.lastval & 1)
@@ -50,7 +55,8 @@ class SubCANDALI(SubCANDevice):
 			return ''
 		return 'set: %02x actual: %02x' % (s.actorval, s.lastval)
 	def dict(s):
-		rv = {}
+		rv = SubCANDevice.dict(s)
+		rv['klass'] = 'light'
 		if s.lastval is not None:
 			rv['actual'] = s.lastval
 			rv['actual_ts'] = int(s.lastupd)
