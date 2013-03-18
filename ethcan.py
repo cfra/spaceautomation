@@ -6,6 +6,10 @@ import json
 import os, traceback
 import hub_ctrl, usb
 import contextlib
+import linux
+import sys
+import settings
+
 
 def ts():
 	return strftime('%Y-%m-%d %H:%M:%S')
@@ -225,7 +229,7 @@ def repower_r0ket():
 	with open('/var/log/ethcan.log', 'a') as logf:
 		logf.write('%s: r0ket powercycled\n' % (ts(), ))
 
-def main():
+def main(interface):
 	poller = select.poll()
 	poller.register(s, select.POLLIN)
 	timeout = 10
@@ -241,7 +245,7 @@ def main():
 			timeout = 10
 	
 		(data, addr) = s.recvfrom(65536)
-		if addr[0] != 'br0':
+		if addr[0] != interface:
 			continue
 		try:
 			pkt = Frame(data)
@@ -262,16 +266,17 @@ def main():
 		rd = {}
 		for d in devices:
 			rd[d.name] = d.dict()
-		output_file = '/home/services/http/subcan.json'
+		output_file = 'subcan.json'
 		with open(output_file + '.new', 'w') as output:
 			output.write(json.dumps(rd, sort_keys=True, indent=4))
 		os.rename(output_file + '.new', output_file)
 
 if __name__ == '__main__':
-	ifindex = 3
+	interface = settings.ethcan_if
 
+	ifindex = linux.if_nametoindex(interface)
 	s = socket.socket(AF_PACKET, SOCK_RAW, htons(0x88b7))
 	mreq = pack('@iHH8s', ifindex, 0, 6, '\xff\x3a\xf6CAN\x00\x00')
 	s.setsockopt(263, 1, mreq)
 
-	main()
+	main(interface)
