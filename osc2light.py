@@ -5,7 +5,7 @@ import liblo
 import socket
 import struct
 import sys
-import clock
+import linux
 import time
 import threading
 
@@ -45,10 +45,10 @@ class TXQueue(threading.Thread):
             item = self.queue.pop(0)
 
         # We can't send too often, this will cause messages to be lost
-        while self.last_sent + self.wait_iv > clock.now():
+        while self.last_sent + self.wait_iv > linux.now():
             time.sleep(self.sleep_iv)
         item.perform()
-        self.last_sent = clock.now()
+        self.last_sent = linux.now()
 
     def append(self, txop):
         assert isinstance(txop, TXOp)
