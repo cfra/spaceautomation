@@ -63,11 +63,11 @@ class TestBot(irc.bot.SingleServerIRCBot):
         c.join(self.channel)
 
     def on_pubmsg(self, c, e):
-        message = e.arguments()[0]
+        message = e.arguments[0]
 
         light_command_prefix = '!light'
         if message.startswith(light_command_prefix):
-            nick = e.source().nick
+            nick = e.source.nick
             self.on_light_command(nick, message[len(light_command_prefix) + 1:])
 
     def on_light_command(self, nick, commandline):
