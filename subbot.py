@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 
 import irc.bot
+import irc.buffer
+import irc.client
 import json, time
 import urllib2
 import sys
@@ -22,6 +24,10 @@ def reload_backend(signum, frame):
     else:
         print >>sys.stderr, "Reloaded backend."
 signal.signal(signal.SIGUSR1, reload_backend)
+
+class PermissiveDecodingLineBuffer(irc.buffer.DecodingLineBuffer):
+    errors = 'replace'
+irc.client.ServerConnection.buffer_class = PermissiveDecodingLineBuffer
 
 class TestBot(irc.bot.SingleServerIRCBot):
     def __init__(self, channel, nickname, server, port=6667):
