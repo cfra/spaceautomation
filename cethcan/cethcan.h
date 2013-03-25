@@ -50,7 +50,12 @@ struct can_message {
 	uint8_t bytes[8];
 };
 
+enum json_subtype {
+	JSON_NORMAL = 0,
+};
+
 typedef void (*can_handler)(void *arg, struct can_message *msg);
+typedef void (*json_handler)(void *arg, json_t *json, enum json_subtype type);
 
 struct can_user {
 	struct can_user *next;
@@ -59,12 +64,14 @@ struct can_user {
 
 	void *arg;
 	can_handler handler;
+	json_handler json;
 };
 
 extern void can_register(struct can_user *user);
 extern struct can_user *can_register_alloc(void *arg, can_handler handler,
 		const char *fmt, ...);
 extern void can_broadcast(struct can_user *origin, struct can_message *msg);
+extern void can_json(json_t *json, enum json_subtype type);
 extern void can_init(void);
 
 extern int ether_init(json_t *config);

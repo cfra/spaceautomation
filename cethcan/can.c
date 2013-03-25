@@ -50,6 +50,14 @@ void can_broadcast(struct can_user *origin, struct can_message *msg)
 			u->handler(u->arg, msg);
 }
 
+void can_json(json_t *json, enum json_subtype type)
+{
+	struct can_user *u;
+	for (u = users; u; u = u->next)
+		if (u->json)
+			u->json(u->arg, json, type);
+}
+
 void can_init(void)
 {
 	/* nothing to do */

@@ -19,6 +19,7 @@ static void http_json_basic(struct evhttp_request *req, void *arg)
 	evhttp_add_header(outhdr, "Content-Type", "text/plain; charset=utf-8");
 
 	json_t *jsout = json_object();
+	can_json(jsout, JSON_NORMAL);
 	json_dump_callback(jsout, evb_json_add, out, JSON_SORT_KEYS | JSON_INDENT(4));
 	evhttp_send_reply(req, 200, "OK", out);
 	evbuffer_free(out);
