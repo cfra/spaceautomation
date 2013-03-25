@@ -17,12 +17,89 @@ struct ether {
 	int sock;
 };
 
+struct frame {
+	uint8_t daddr[ETH_ALEN];
+	uint8_t saddr[ETH_ALEN];
+	uint16_t proto;
+	uint8_t oui[3];
+	uint16_t protoid;
+	uint8_t protover;
+	uint32_t ts1, ts2;
+	uint32_t can_daddr;
+	uint8_t can_dlc;
+	uint8_t can_data[8];
+} __attribute__((packed));
+
+
 static void ether_can_handler(void *arg, struct can_message *msg)
 {
+	struct ether *e = arg;
+	lprintf("%s: TX not implemented", e->u->name);
+}
+
+static void ether_rx_dataframe(struct ether *e, struct frame *f)
+{
+	struct can_message msg;
+
+	msg.daddr = ntohl(f->can_daddr);
+	msg.dlc = f->can_dlc;
+	if (msg.dlc > 8)
+		msg.dlc = 8;
+	memcpy(msg.bytes, f->can_data, msg.dlc);
+
+	can_broadcast(e->u, &msg);
 }
 
 static void ether_sock_handler(int sock, short event, void *arg)
 {
+	struct ether *e = arg;
+	union {
+		struct sockaddr_ll ll;
+		struct sockaddr_storage ss;
+		struct sockaddr su;
+	} lladdr;
+	socklen_t addrlen = sizeof(lladdr);
+	union {
+		struct frame frame;
+		uint8_t raw[1536];
+	} buf;
+
+	if (event & EV_READ) {
+		ssize_t rlen = recvfrom(e->sock, &buf, sizeof(buf),
+			MSG_TRUNC, &lladdr.su, &addrlen);
+		if (rlen > 0) {
+			if (0) {
+				lprintf("got %zd bytes", rlen);
+				char pbuffer[16 * 3 + 1];
+				for (size_t i = 0; i < (size_t)rlen; i++) {
+					size_t j = i % 16;
+					sprintf(pbuffer + (3 * j), " %02x", buf.raw[i]);
+					if (j == 15)
+						lprintf(">>%s", pbuffer);
+				}
+				if ((rlen % 16) != 15)
+					lprintf(">>%s", pbuffer);
+			}
+
+			if (ntohs(buf.frame.proto) == ETHER_PROTO
+				&& buf.frame.oui[0] == 0x00
+				&& buf.frame.oui[1] == 0x80
+				&& buf.frame.oui[2] == 0x41
+				&& ntohs(buf.frame.protoid) == 0xaaaa) {
+				switch (buf.frame.protover) {
+				case 3:
+					ether_rx_dataframe(e, &buf.frame);
+					break;
+				default:
+					lprintf("%s: unsupported CAN protocol version %d",
+						e->u->name, buf.frame.protover);
+				}
+			} else {
+				lprintf("%s: non-CAN frame (%zd bytes)",
+					e->u->name, rlen);
+			}
+		}
+	}
 }
 
 int ether_init(json_t *config)

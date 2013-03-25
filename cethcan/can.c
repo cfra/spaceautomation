@@ -42,7 +42,8 @@ void can_broadcast(struct can_user *origin, struct can_message *msg)
 	}
 	for (size_t i = 0; i < msg->dlc; i++)
 		sprintf(buf + 3 * i, " %02x", msg->bytes[i]);
-	lprintf("%08x (%zu)%s", (unsigned)msg->daddr, msg->dlc, buf);
+	lprintf("%s: %08x (%zu)%s", origin->name,
+		(unsigned)msg->daddr, msg->dlc, buf);
 
 	for (u = users; u; u = u->next)
 		if (u != origin)
