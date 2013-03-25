@@ -23,6 +23,8 @@
 #include <event2/event.h>
 #include <jansson.h>
 
+#include "protocol.h"
+
 #define lprintf(...) do { \
 	struct timeval tv; struct tm tm; char tvbuf[64]; \
 	gettimeofday(&tv, NULL); localtime_r(&tv.tv_sec, &tm); \
@@ -66,5 +68,6 @@ extern void can_broadcast(struct can_user *origin, struct can_message *msg);
 extern void can_init(void);
 
 extern int ether_init(json_t *config);
+extern int light_init_conf(json_t *config);
 
 #endif /* _CETHCAN_H */

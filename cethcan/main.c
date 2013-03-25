@@ -7,7 +7,7 @@ int main(int argc, char **argv)
 	int optch = 0;
 	const char *cfgfile = "cethcan.json";
 	json_error_t je;
-	json_t *config, *ethercfg;
+	json_t *config, *ethercfg, *lightcfg;
 
 	do {
 		optch = getopt(argc, argv, "c:");
@@ -44,6 +44,13 @@ int main(int argc, char **argv)
 	for (size_t i = 0; i < json_array_size(ethercfg); i++) {
 		json_t *c = json_array_get(ethercfg, i);
 		if (ether_init(c))
+			return 1;
+	}
+
+	lightcfg = json_object_get(config, "lights");
+	for (size_t i = 0; i < json_array_size(lightcfg); i++) {
+		json_t *c = json_array_get(lightcfg, i);
+		if (light_init_conf(c))
 			return 1;
 	}
 
