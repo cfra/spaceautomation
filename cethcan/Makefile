@@ -3,7 +3,7 @@ love: cethcan
 
 PKGS="libevent jansson"
 
-cethcan: main.o can.o
+cethcan: main.o can.o ether.o
 	gcc -g -o $@ `pkg-config --libs $(PKGS)` $^
 
 clean:

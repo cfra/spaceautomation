@@ -23,8 +23,16 @@
 #include <event2/event.h>
 #include <jansson.h>
 
+#define lprintf(...) do { \
+	struct timeval tv; struct tm tm; char tvbuf[64]; \
+	gettimeofday(&tv, NULL); localtime_r(&tv.tv_sec, &tm); \
+	strftime(tvbuf, sizeof(tvbuf), "%Y-%m-%d %H:%M:%S", &tm); \
+	fprintf(stderr, "%s.%03d ", tvbuf, tv.tv_usec / 1000); \
+	fprintf(stderr, __VA_ARGS__); \
+	fprintf(stderr, "\n"); \
+	} while (0)
+
 extern struct event_base *ev_base;
-extern json_t *config;
 
 struct can_user;
 
@@ -56,5 +64,7 @@ extern struct can_user *can_register_alloc(void *arg, can_handler handler,
 		const char *fmt, ...);
 extern void can_broadcast(struct can_user *origin, struct can_message *msg);
 extern void can_init(void);
+
+extern int ether_init(json_t *config);
 
 #endif /* _CETHCAN_H */
