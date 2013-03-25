@@ -69,5 +69,6 @@ extern void can_init(void);
 
 extern int ether_init(json_t *config);
 extern int light_init_conf(json_t *config);
+extern void http_init(void);
 
 #endif /* _CETHCAN_H */

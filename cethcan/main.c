@@ -54,6 +54,8 @@ int main(int argc, char **argv)
 			return 1;
 	}
 
+	http_init();
+
 	event_base_loop(ev_base, 0);
 	return 0;
 }
