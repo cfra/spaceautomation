@@ -52,6 +52,7 @@ struct can_message {
 
 enum json_subtype {
 	JSON_NORMAL = 0,
+	JSON_LONGPOLL = 1,
 };
 
 typedef void (*can_handler)(void *arg, struct can_message *msg);
@@ -73,6 +74,8 @@ extern struct can_user *can_register_alloc(void *arg, can_handler handler,
 extern void can_broadcast(struct can_user *origin, struct can_message *msg);
 extern void can_json(json_t *json, enum json_subtype type);
 extern void can_init(void);
+
+extern void json_bump_longpoll(void);
 
 extern int ether_init(json_t *config);
 extern int light_init_conf(json_t *config);

@@ -23,11 +23,13 @@ static void light_json_handler(void *arg, json_t *json, enum json_subtype type)
 	json_object_set_new(lobj, "addr", json_integer(l->logical_addr));
 
 	json_object_set_new(lobj, "actual", json_integer(l->actual.val));
-	json_object_set_new(lobj, "actual_ts", json_integer(l->actual.valid));
+	if (type != JSON_LONGPOLL)
+		json_object_set_new(lobj, "actual_ts", json_integer(l->actual.valid));
 	json_object_set_new(lobj, "actual_tschg", json_integer(l->actual.change));
 
 	json_object_set_new(lobj, "set", json_integer(l->set.val));
-	json_object_set_new(lobj, "set_ts", json_integer(l->set.valid));
+	if (type != JSON_LONGPOLL)
+		json_object_set_new(lobj, "set_ts", json_integer(l->set.valid));
 	json_object_set_new(lobj, "set_tschg", json_integer(l->set.change));
 
 	json_object_set_new(json, l->name, lobj);
@@ -59,6 +61,8 @@ static void light_can_handler(void *arg, struct can_message *msg)
 		v->val = dval;
 		time(&v->change);
 		lprintf("%s: set %02x", l->u->name, dval);
+
+		json_bump_longpoll();
 	}
 }
 
