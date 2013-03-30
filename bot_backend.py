@@ -4,7 +4,7 @@ import urllib2
 # Known lights, terminal symbols
 lights_terminal = {}
 
-for i in range(1,5):
+for i in range(1,12):
     ident = '%02d' % i
     lights_terminal[ident] = 'osc.udp://172.22.83.5:4243/dali/lamps/%s/bright' % ident
 
