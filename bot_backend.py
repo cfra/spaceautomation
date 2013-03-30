@@ -10,13 +10,21 @@ for i in range(1,5):
 
 # Production Rules/Aliases
 lights_production = {
-    u'lounge-stage':    [u'01'],
-    u'lounge-office':   [u'02'],
-    u'lounge-bar':      [u'03'],
-    u'lounge-clock':    [u'04'],
-    u'lounge-west':     [u'lounge-bar', u'lounge-clock'],
-    u'lounge-east':     [u'lounge-stage', u'lounge-office'],
-    u'lounge':          [u'lounge-east', u'lounge-west'],
+    u'lounge-stage':        [u'01'],
+    u'lounge-office':       [u'02'],
+    u'lounge-bar':          [u'03'],
+    u'lounge-clock':        [u'04'],
+    u'hacklab-east-outer':  [u'05'],
+    u'hacklab-east-middle': [u'06'],
+    u'hacklab-west-inner':  [u'07'],
+    # hacklab 08
+    # hacklab 09
+    # hacklab 10
+    u'hallway':             [u'11'],
+    u'lounge-west':         [u'lounge-bar', u'lounge-clock'],
+    u'lounge-east':         [u'lounge-stage', u'lounge-office'],
+    u'lounge':              [u'lounge-east', u'lounge-west'],
+    u'hacklab':             [u'hacklab-east-outer', u'hacklab-east-middle', u'hacklab-west-inner'],
 }
 
 class OSCMessage(object):
