@@ -86,7 +86,7 @@ class TestBot(irc.bot.SingleServerIRCBot):
     def refresh(self):
         curtime = time.time()
         try:
-            with contextlib.closing(urllib2.urlopen('http://taifun.local.sublab.org/subcan.json')) as json_stream:
+            with contextlib.closing(urllib2.urlopen('http://argonaut.local.sublab.org/subcan.json')) as json_stream:
                 sdata = json.load(json_stream)
             door = sdata[u'door.lock']
 
