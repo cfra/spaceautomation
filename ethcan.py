@@ -76,6 +76,13 @@ devices = [
 	SubCANDALI(0x442, 'dali.lounge_buero'),
 	SubCANDALI(0x443, 'dali.lounge_bar'),
 	SubCANDALI(0x444, 'dali.lounge_durchreiche'),
+	SubCANDALI(0x445, 'dali.hacklab.east.outer'),
+	SubCANDALI(0x446, 'dali.hacklab.east.middle'),
+	SubCANDALI(0x447, 'dali.hacklab.west.inner'),
+	SubCANDALI(0x448, 'dali.hacklab.west.middle'),
+	SubCANDALI(0x449, 'dali.hacklab.east.inner'),
+	SubCANDALI(0x44a, 'dali.hacklab.west.outer'),
+	SubCANDALI(0x44b, 'dali.flur'),
 #	SubCANDALI(0x47f, 'dali.lswitch'),
 ]
 def find_dev(addr):
