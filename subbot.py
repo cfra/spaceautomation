@@ -107,7 +107,7 @@ class TestBot(irc.bot.SingleServerIRCBot):
         self.ircobj.execute_delayed(5, self.refresh)
 
 def main(nickname, channel):
-    bot = TestBot(channel, nickname, '172.22.24.1', 6667)
+    bot = TestBot(channel, nickname, 'irc.hackint.org', 6667)
     bot.start()
 
 if __name__ == "__main__":

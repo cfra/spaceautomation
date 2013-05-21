@@ -48,7 +48,7 @@ data += dgst.digest()
 
 data = pack('>6s6sH3sH', dst, src, proto, oui, subp) + data
 
-s.sendto(data, ('bond0.4', 0))
+s.sendto(data, ('eth0', 0))
 #sleep(0.1)
 #s.sendto(data, ('bond0.4', 0))
 #sleep(0.1)
