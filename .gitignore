@@ -1,3 +1,4 @@
 *.pyc
 settings.py
 subcan.json
+subcan.svg
