@@ -21,7 +21,22 @@ struct socan {
 static void socan_handler(void *arg, struct can_message *msg)
 {
 	struct socan *sc = arg;
-	lprintf("%s: TX not implemented", sc->u->name);
+	struct can_frame frame;
+	memset(&frame, 0, sizeof(frame));
+
+	if (msg->daddr & 0x00080000)
+		frame.can_id = CAN_EFF_FLAG
+			| (msg->daddr & 0x0003ffff)
+			| ((msg->daddr & 0xffe00000) >> 3);
+	else
+		frame.can_id = msg->daddr >> 21;
+
+	frame.can_dlc = msg->dlc;
+	memcpy(frame.data, msg->bytes, msg->dlc > CANFD_MAX_DLEN ? 
+			CANFD_MAX_DLEN : msg->dlc);
+
+	if (write(sc->sock, &frame, sizeof(frame)) != sizeof(frame))
+		lprintf("%s: send failed: %s", sc->u->name, strerror(errno));
 }
 
 static void socan_event(int sock, short event, void *arg)
