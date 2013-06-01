@@ -1,0 +1,26 @@
+{
+	"socketcan": [
+		{ "interface": "can0" }
+	],
+	"lights": [
+		{ "addr": 1089, "name": "dali.lounge_buehne" },
+		{ "addr": 1090, "name": "dali.lounge_buero" },
+		{ "addr": 1091, "name": "dali.lounge_bar" },
+		{ "addr": 1092, "name": "dali.lounge_durchreiche" },
+
+		{ "addr": 1093, "name": "dali.hacklab.east.outer" },
+		{ "addr": 1094, "name": "dali.hacklab.east.middle" },
+		{ "addr": 1095, "name": "dali.hacklab.west.inner" },
+		{ "addr": 1096, "name": "dali.hacklab.west.middle" },
+		{ "addr": 1097, "name": "dali.hacklab.east.inner" },
+		{ "addr": 1098, "name": "dali.hacklab.west.outer" },
+
+		{ "addr": 1099, "name": "dali.flur" }
+	],
+	"beans": [
+		{ "addr": 256, "name": "door.right", "values": [ "open", "closed" ] },
+		{ "addr": 257, "name": "door.left",  "values": [ "open", "closed" ] },
+		{ "addr": 258, "name": "door.light", "values": [ "triggered", "normal" ] },
+		{ "addr": 259, "name": "door.lock",  "values": [ "open", "closed" ] }
+	]
+}
