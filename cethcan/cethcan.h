@@ -80,6 +80,7 @@ extern void json_bump_longpoll(void);
 extern int socan_init(json_t *config);
 extern int ether_init(json_t *config);
 extern int light_init_conf(json_t *config);
+extern int bean_init_conf(json_t *config);
 extern void http_init(void);
 
 #endif /* _CETHCAN_H */
