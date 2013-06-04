@@ -8,6 +8,21 @@
 #include <linux/can.h>
 #include <linux/can/raw.h>
 
+#ifndef CANFD_MAX_DLEN
+#define CANFD_MAX_DLEN 64
+#endif
+#ifndef CAN_RAW_FD_FRAMES
+#define CAN_RAW_FD_FRAMES 5
+struct canfd_frame {
+	canid_t	can_id;	/* 32 bit CAN_ID + EFF/RTR/ERR flags */
+	__u8	len;	/* frame payload length in byte */
+	__u8	flags;	/* additional flags for CAN FD */
+	__u8	__res0;	/* reserved / padding */
+	__u8	__res1;	/* reserved / padding */
+	__u8	data[CANFD_MAX_DLEN] __attribute__((aligned(8)));
+};
+#endif
+
 struct socan {
 	struct can_user *u;
 	struct event *ev;
