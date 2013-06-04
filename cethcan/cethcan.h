@@ -21,6 +21,7 @@
 #include <assert.h>
 
 #include <event2/event.h>
+#include <event2/buffer.h>
 #include <jansson.h>
 
 #include "protocol.h"
@@ -74,6 +75,10 @@ extern struct can_user *can_register_alloc(void *arg, can_handler handler,
 extern void can_broadcast(struct can_user *origin, struct can_message *msg);
 extern void can_json(json_t *json, enum json_subtype type);
 extern void can_init(void);
+
+extern void rpc_perform(struct evbuffer *request,
+	void (*response_handler)(void *arg, struct evbuffer *data),
+	void *handler_arg);
 
 extern void json_bump_longpoll(void);
 

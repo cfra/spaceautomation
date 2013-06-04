@@ -66,6 +66,31 @@ out_inval:
 	evbuffer_free(out);
 }
 
+static void http_jsonrpc_response(void *arg, struct evbuffer *data)
+{
+	struct evhttp_request *req = arg;
+	evhttp_send_reply_chunk(req, data);
+	evhttp_send_reply_end(req);
+}
+
+static void http_jsonrpc(struct evhttp_request *req, void *arg)
+{
+	struct evkeyvalq *outhdr = evhttp_request_get_output_headers(req);
+	struct evbuffer *inp = evhttp_request_get_input_buffer(req);
+
+	if (evhttp_request_get_command(req) != EVHTTP_REQ_POST) {
+		evhttp_send_error(req, 405, "JSON-RPC request must be POSTed");
+		return;
+	}
+
+	evhttp_add_header(outhdr, "Content-Type", "application/json; charset=utf-8");
+	evhttp_send_reply_start(req, 200, "OK");
+	evhttp_request_own(req);
+
+	rpc_perform(inp, http_jsonrpc_response, req);
+	return;
+}
+
 static void http_json_bump(struct evhttp_request *req, void *arg)
 {
 	struct evkeyvalq *outhdr = evhttp_request_get_output_headers(req);
@@ -182,6 +207,7 @@ void http_init(void)
 	evhttp_set_cb(evhttp, "/set", http_json_set, NULL);
 	evhttp_set_cb(evhttp, "/longpoll", http_json_longpoll, NULL);
 	evhttp_set_cb(evhttp, "/bump", http_json_bump, NULL);
+	evhttp_set_cb(evhttp, "/jsonrpc", http_jsonrpc, NULL);
 	evhttp_bind_socket(evhttp, "127.0.0.1", 34999);
 
 	longpoll_updatedata();
