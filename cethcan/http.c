@@ -1,10 +1,12 @@
 #include "cethcan.h"
 
 #include <event2/http.h>
+#include <event2/http_struct.h>
 #include <event2/buffer.h>
 #include <openssl/sha.h>
 
 static struct evhttp *evhttp;
+static struct can_user *cuhttp;
 
 static int evb_json_add(const char *data, size_t size, void *arg)
 {
@@ -25,6 +27,42 @@ static void http_json_basic(struct evhttp_request *req, void *arg)
 	json_decref(jsout);
 
 	evhttp_send_reply(req, 200, "OK", out);
+	evbuffer_free(out);
+}
+
+static void http_json_set(struct evhttp_request *req, void *arg)
+{
+	struct evkeyvalq *outhdr = evhttp_request_get_output_headers(req);
+	struct evbuffer *out = evbuffer_new();
+	const char *cmd = evhttp_uri_get_query(req->uri_elems), *set;
+	char *e = NULL;
+	unsigned long cmdl, setl;
+	struct can_message msg;
+
+	if (!cmd || !(set = strchr(cmd, '=')) || set == cmd || set[1] == '\0')
+		goto out_inval;
+	cmdl = strtoul(cmd, &e, 0);
+	if (e != set)
+		goto out_inval;
+	setl = strtoul(set + 1, &e, 0);
+	if (*e || setl > 0xff)
+		goto out_inval;
+
+	msg.daddr = CANA_LIGHT_F(0, cmdl);
+	msg.dlc = 1;
+	msg.bytes[0] = setl;
+	can_broadcast(cuhttp, &msg);
+
+	evhttp_add_header(outhdr, "Content-Type", "text/plain; charset=utf-8");
+
+	evbuffer_add_printf(out, "ok %lu = %lu", cmdl, setl);
+	evhttp_send_reply(req, 200, "OK", out);
+	evbuffer_free(out);
+	return;
+
+out_inval:
+	evbuffer_add_printf(out, "invalid request.");
+	evhttp_send_reply(req, 500, "Parameter missing", out);
 	evbuffer_free(out);
 }
 
@@ -131,10 +169,17 @@ void json_bump_longpoll(void)
 	longpoll_count = 0;
 }
 
+static void http_can_handler(void *arg, struct can_message *msg)
+{
+}
+
 void http_init(void)
 {
+	cuhttp = can_register_alloc(NULL, http_can_handler, "http");
+
 	evhttp = evhttp_new(ev_base);
 	evhttp_set_cb(evhttp, "/", http_json_basic, NULL);
+	evhttp_set_cb(evhttp, "/set", http_json_set, NULL);
 	evhttp_set_cb(evhttp, "/longpoll", http_json_longpoll, NULL);
 	evhttp_set_cb(evhttp, "/bump", http_json_bump, NULL);
 	evhttp_bind_socket(evhttp, "127.0.0.1", 34999);
