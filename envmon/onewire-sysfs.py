@@ -3,6 +3,7 @@ Onewire interface using w1 sysfs
 """
 
 import os
+import re
 import sys
 import time
 
