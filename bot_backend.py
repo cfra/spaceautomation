@@ -1,4 +1,4 @@
-import liblo
+import contextlib
 import urllib2
 
 # Known lights, terminal symbols
@@ -6,7 +6,7 @@ lights_terminal = {}
 
 for i in range(1,12):
     ident = '%02d' % i
-    lights_terminal[ident] = 'osc.udp://172.22.83.5:4243/dali/lamps/%s/bright' % ident
+    lights_terminal[ident] = 'http://beaglebone.local.sublab.org/set?%s=' % (i + 0x440)
 
 # Production Rules/Aliases
 lights_production = {
@@ -27,19 +27,9 @@ lights_production = {
     u'hacklab':             [u'hacklab-east-outer', u'hacklab-east-middle', u'hacklab-west-inner'],
 }
 
-class OSCMessage(object):
-    def __init__(self, url):
-        parsed = urllib2.urlparse.urlparse(url)
-        self.path = parsed.path
-        self.url = urllib2.urlparse.urlunparse((parsed.scheme, parsed.netloc, '', '', '', ''))
-
-        self.msg = liblo.Message(self.path)
-
-    def __getattr__(self, name):
-        return getattr(self.msg, name)
-
-    def send(self):
-        liblo.send(self.url, self.msg)
+def tmp_set(url, value):
+    with contextlib.closing(urllib2.urlopen(url + str(value))):
+        pass
 
 def on_pubmsg(self, c, e):
     message = e.arguments[0]
@@ -97,9 +87,7 @@ def on_light_set(self, tokens):
             return
 
     for light in lights:
-        msg = OSCMessage(lights_terminal[light])
-        msg.add(status)
-        msg.send()
+        tmp_set(lights_terminal[light], status)
     self.connection.privmsg(self.channel, "Light command processed.")
 
 def light_usage(self):
