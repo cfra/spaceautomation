@@ -13,8 +13,30 @@ function simple_xpath(expr) {
 	return nodes;
 }
 
+var mousesel = null;
+var mouseset = null;
+var mouseorig = 0;
+var mousey = 0;
+var mousetimer = null;
+var mousetdir = 0;
+var mousestart = 0;
+
+function immediate_update(id, setval) {
+	var nodes = simple_xpath('//svg:text[@inkscape:label = "'+id+'=%set"]');
+
+	for (i in nodes) {
+		var node = nodes[i];
+		value = Math.round(setval / 255. * 100) + "%";
+		node.firstChild.textContent = value;
+	}
+}
+
 function on_evt_click(node) {
 	var id = node.id.substring(4);
+	var now = new Date().getTime();
+	if (now - mousestart > 100)
+		return;
+
 	console.log("clicked", id);
 
 	$.jsonRPC.request('light_get', {
@@ -33,12 +55,123 @@ function on_evt_click(node) {
 			console.log('light_set error', result);
 		},
 		success: function(result) {
-			console.log('light_set ', id, ' => ', newset, ' OK: ', result['result']);
+			// console.log('light_set ', id, ' => ', newset, ' OK: ', result['result']);
+			immediate_update(id, newset);
 		}
 	});
 	/* >>> */
 		}
 	});
+}
+
+function on_mouse_timer() {
+	if (mousesel === null)
+		return;
+
+	var id = mousesel.id.substring(4);
+
+/*	mouseset += mousetdir * 8;
+	if (mouseset < 1)
+		mouseset = 1;
+	if (id.substring(0, 4) == 'dali' && mouseset < 0x55)
+		mouseset = 0x55;
+	if (mouseset > 255)
+		mouseset = 255; */
+
+	$.jsonRPC.request('light_set', {
+		params: [id, mouseset],
+		error: function(result) {
+			console.log('light_set error', result);
+		},
+		success: function(result) {
+			// console.log('light_set ', id, ' => ', mouseset, ' OK: ', result['result']);
+			immediate_update(id, mouseset);
+		}
+	});
+
+	mousetimer = window.setTimeout(on_mouse_timer, 100);
+}
+
+function on_evt_mousedown(node, evt) {
+	var id = node.id.substring(4);
+	// console.log('node', node, 'y', evt.clientY);
+	mousestart = new Date().getTime();
+	node.style.fill = "#0088ff";
+	node.style.fillOpacity = 0.25;
+	mousesel = node;
+	mousey = evt.clientY;
+	$.jsonRPC.request('light_get', {
+		params: [id],
+		error: function(result) {
+			console.log('light_get error', result);
+		},
+		success: function(result) {
+			mouseorig = result['result']['set'];
+			mouseset = mouseorig;
+		}
+	});
+
+	if (evt.stopPropagation) evt.stopPropagation();
+	evt.cancelBubble = true;
+	return false;
+}
+
+function on_evt_mousemove(node, evt) {
+	if (mousesel === null)
+		return;
+
+	var offs = evt.clientY - mousey;
+	// console.log('node', node, 'set', mouseset, 'y', evt.clientY, 'offs', offs);
+	var deadzone = 20;
+	var dimzone = 120;
+
+	var min = 1;
+	if (mousesel.id.substring(4, 8) == 'dali')
+		min = 0x55;
+
+	if (offs > -deadzone && offs < deadzone) {
+		if (mousetimer !== null)
+			window.clearTimeout(mousetimer);
+		mousetimer = null;
+		return;
+	}
+
+	if (offs < 0) {
+		var pos = (-offs - deadzone) / dimzone;
+		console.log("cvo", offs, "+dim", pos);
+		mouseset = mouseorig + pos * (255 - mouseorig);
+	} else {
+		var pos = (offs - deadzone) / dimzone;
+		console.log("cvo", offs, "-dim", pos);
+		mouseset = mouseorig * (1.0 - pos);
+	}
+	mouseset = Math.floor(mouseset);
+	if (mouseset > 255)
+		mouseset = 255;
+	if (mouseset < min)
+		mouseset = min;
+
+	if (mousetimer === null)
+		mousetimer = window.setTimeout(on_mouse_timer, 100);
+
+	evt.cancelBubble = true;
+	if (evt.stopPropagation) evt.stopPropagation();
+	return false;
+}
+
+function on_evt_mouseup(node, evt) {
+	// console.log('--- up ---');
+	window.setTimeout((function() {
+		var sel = mousesel;
+		return function() {
+			sel.style.fillOpacity = 0.0;
+		}
+	})(), 250);
+	mousesel = null;
+
+	evt.cancelBubble = true;
+	if (evt.stopPropagation) evt.stopPropagation();
+	return false;
 }
 
 function prepare_cliprects() {
@@ -77,6 +210,41 @@ function prepare_evts() {
 			var current_node = node;
 			return function() { on_evt_click(current_node); }
 		})();
+		node.onmousedown = (function() {
+			var current_node = node;
+			return function(evt) { on_evt_mousedown(current_node, evt); }
+		})();
+		node.onmousemove = (function() {
+			var current_node = node;
+			return function(evt) { on_evt_mousemove(current_node, evt); }
+		})();
+		node.onmouseup = (function() {
+			var current_node = node;
+			return function(evt) { on_evt_mouseup(current_node, evt); }
+		})();
+		node.onselectstart = function() { return false; }
+		node.unselectable = 'on';
+		node.style.userSelect = 'none';
+		node.style.MozUserSelect = 'none';
+		node.style.WebkitUserSelect = 'none';
+	}
+	document.onmouseup = (function() {
+		var current_node = node;
+		return function(evt) { on_evt_mouseup(current_node, evt); }
+	})();
+	document.onmousemove = (function() {
+		var current_node = node;
+		return function(evt) { on_evt_mousemove(current_node, evt); }
+	})();
+
+	var nodes = simple_xpath('//svg:text');
+	for (i in nodes) {
+		var node = nodes[i];
+		node.onselectstart = function() { return false; }
+		node.unselectable = 'on';
+		node.style.userSelect = 'none';
+		node.style.MozUserSelect = 'none';
+		node.style.WebkitUserSelect = 'none';
 	}
 }
 
