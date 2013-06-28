@@ -204,6 +204,7 @@ void http_init(void)
 
 	evhttp = evhttp_new(ev_base);
 	evhttp_set_cb(evhttp, "/", http_json_basic, NULL);
+	evhttp_set_cb(evhttp, "/subcan.json", http_json_basic, NULL);
 	evhttp_set_cb(evhttp, "/set", http_json_set, NULL);
 	evhttp_set_cb(evhttp, "/longpoll", http_json_longpoll, NULL);
 	evhttp_set_cb(evhttp, "/bump", http_json_bump, NULL);
