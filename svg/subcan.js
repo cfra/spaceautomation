@@ -13,6 +13,34 @@ function simple_xpath(expr) {
 	return nodes;
 }
 
+function on_evt_click(node) {
+	var id = node.id.substring(4);
+	console.log("clicked", id);
+
+	$.jsonRPC.request('light_get', {
+		params: [id],
+		error: function(result) {
+			console.log('light_get error', result);
+		},
+		success: function(result) {
+	/* <<< */
+	console.log('light_get', result['result']);
+	var set = result['result']['set'];
+	var newset = set ? 0 : 255;
+	$.jsonRPC.request('light_set', {
+		params: [id, newset],
+		error: function(result) {
+			console.log('light_set error', result);
+		},
+		success: function(result) {
+			console.log('light_set ', id, ' => ', newset, ' OK: ', result['result']);
+		}
+	});
+	/* >>> */
+		}
+	});
+}
+
 function prepare_cliprects() {
 	var nodes = simple_xpath('//svg:rect[contains(@inkscape:label, "=")]');
 	console.log('setup');
@@ -22,6 +50,33 @@ function prepare_cliprects() {
 		node.orig_y = node.y.baseVal.value;
 		node.orig_w = node.width.baseVal.value;
 		node.orig_h = node.height.baseVal.value;
+	}
+}
+
+function prepare_evts() {
+	$.jsonRPC.setup({
+		endPoint: '/jsonrpc',
+		namespace: ''
+	});
+	$.jsonRPC.request('ping', {
+		success: function(result) {
+			console.log('ping', result['result']);
+		},
+		error: function(result) {
+			console.log('ping error', result);
+		}
+	});
+
+	var nodes = simple_xpath('//svg:g[@inkscape:label="events"]/svg:rect');
+	console.log('setup events', nodes);
+	for (i in nodes) {
+		var node = nodes[i];
+		var id = node.id;
+		console.log('event node', i, " => ", node);
+		node.onclick = (function() {
+			var current_node = node;
+			return function() { on_evt_click(current_node); }
+		})();
 	}
 }
 
@@ -99,5 +154,6 @@ function timer() {
 
 function doload() {
 	prepare_cliprects();
+	prepare_evts();
 	timer();
 }
