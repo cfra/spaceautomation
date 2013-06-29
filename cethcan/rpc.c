@@ -12,42 +12,87 @@ static int rpc_ping(void *apparg, json_t *json_params, json_t **result)
 static int rpc_light_set(void *apparg, json_t *json_params, json_t **result)
 {
 	struct light *l;
+	struct espnet_device *esp;
 	const char *name = json_string_value(json_array_get(json_params, 0));
-	unsigned val = json_integer_value(json_array_get(json_params, 1));
-	
+	const char *emsg;
+
 	l = light_find(name);
-	if (!l) {
-		*result = jsonrpc_error_object(JSONRPC_INVALID_PARAMS,
-			json_string("cann't find specified light"));
-		return JSONRPC_INVALID_PARAMS;
+	if (l) {
+		unsigned val;
+
+		if (!json_is_integer(json_array_get(json_params, 1))) {
+			emsg = "expected integer value";
+			goto out_err;
+		}
+
+		val = json_integer_value(json_array_get(json_params, 1));
+		*result = json_boolean(!light_set(l, val));
+		return 0;
 	}
-	*result = json_boolean(!light_set(l, val));
-	return 0;
+
+	esp = espnet_find(name);
+	if (esp) {
+		unsigned r, g, b;
+		json_t *val = json_array_get(json_params, 1);
+
+		if (json_is_integer(val))
+			r = g = b = json_integer_value(val);
+		else if (json_is_array(val)) {
+			if (json_unpack(val, "[iii]", &r, &g, &b)) {
+				emsg = "failed to parse value array";
+				goto out_err;
+			}
+		} else {
+			emsg = "expected integer or [int,int,int] value";
+			goto out_err;
+		}
+
+		*result = json_boolean(!espnet_set(esp, r, g, b));
+		return 0;
+	}
+
+	emsg = "cann't find specified light";
+out_err:
+	*result = jsonrpc_error_object(JSONRPC_INVALID_PARAMS,
+			json_string(emsg));
+	return JSONRPC_INVALID_PARAMS;
 }
 
 static int rpc_light_get(void *apparg, json_t *json_params, json_t **result)
 {
 	struct light *l;
+	struct espnet_device *esp;
 	const char *name = json_string_value(json_array_get(json_params, 0));
 	unsigned set, actual;
 
 	l = light_find(name);
-	if (!l) {
-		*result = jsonrpc_error_object(JSONRPC_INVALID_PARAMS,
-			json_string("cannot find specified light"));
-		return JSONRPC_INVALID_PARAMS;
+	if (l) {
+		set = light_getset(l);
+		actual = light_getact(l);
+
+		*result = json_pack("{s:i,s:i}",
+				"set", set, "actual", actual);
+		return 0;
 	}
 
-	set = light_getset(l);
-	actual = light_getact(l);
+	esp = espnet_find(name);
+	if (esp) {
+		unsigned r, g, b;
+		espnet_get(esp, &r, &g, &b);
 
-	*result = json_pack("{s:i,s:i}", "set", set, "actual", actual);
-	return 0;
+		*result = json_pack("{s:i,s:i,s:i}",
+				"r", r, "g", g, "b", b);
+		return 0;
+	}
+
+	*result = jsonrpc_error_object(JSONRPC_INVALID_PARAMS,
+		json_string("cannot find specified light"));
+	return JSONRPC_INVALID_PARAMS;
 }
 
 struct jsonrpc_method_entry_t method_table[] = {
 	{ "ping", rpc_ping, "" },
-	{ "light_set", rpc_light_set, "[si]" },
+	{ "light_set", rpc_light_set, "[so]" },
 	{ "light_get", rpc_light_get, "[s]" },
 	{ NULL, NULL, NULL },
 };
