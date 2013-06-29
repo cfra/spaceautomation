@@ -4517,7 +4517,7 @@
        inkscape:label="#rect3791" />
     <rect
        style="fill:#000000;fill-opacity:0.00392157;stroke:none"
-       id="evt_dali.lounge_buehne-0"
+       id="evt_dmx.lounge_traverse"
        width="104"
        height="40"
        x="168.5"
@@ -4525,7 +4525,7 @@
        inkscape:label="#rect3791" />
     <rect
        style="fill:#000000;fill-opacity:0.00392157;stroke:none"
-       id="evt_dali.lounge_buehne-0-7"
+       id="evt_dmx.lounge_buehne_links"
        width="104"
        height="56"
        x="168.5"
@@ -4533,7 +4533,7 @@
        inkscape:label="#rect3791" />
     <rect
        style="fill:#000000;fill-opacity:0.00392157;stroke:none"
-       id="evt_dali.lounge_buehne-0-71"
+       id="evt_dmx.lounge_decke"
        width="104"
        height="56"
        x="168.5"
@@ -4541,7 +4541,7 @@
        inkscape:label="#rect3791" />
     <rect
        style="fill:#000000;fill-opacity:0.00392157;stroke:none"
-       id="evt_dali.lounge_buehne-0-71-8"
+       id="evt_dmx.lounge_buero_ecke"
        width="104"
        height="56"
        x="320.5"
@@ -4549,7 +4549,7 @@
        inkscape:label="#rect3791" />
     <rect
        style="fill:#000000;fill-opacity:0.00392157;stroke:none"
-       id="evt_dali.lounge_midwest"
+       id="evt_dmx.lounge_midwest"
        width="104"
        height="56"
        x="320.5"

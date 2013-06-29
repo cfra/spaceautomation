@@ -42,12 +42,18 @@ function on_evt_click(node) {
 	$.jsonRPC.request('light_get', {
 		params: [id],
 		error: function(result) {
-			console.log('light_get error', result);
+			console.log('light_get', id, 'error', result);
 		},
 		success: function(result) {
 	/* <<< */
-	console.log('light_get', result['result']);
-	var set = result['result']['set'];
+	r = result['result']
+	console.log('light_get', r);
+	var set;
+	if (r['r'] !== null) {
+		set = (r['r'] + r['g'] + r['b']) / 3;
+	} else {
+		set = r['set'];
+	}
 	var newset = set ? 0 : 255;
 	$.jsonRPC.request('light_set', {
 		params: [id, newset],
@@ -106,7 +112,12 @@ function on_evt_mousedown(node, evt) {
 			console.log('light_get error', result);
 		},
 		success: function(result) {
-			mouseorig = result['result']['set'];
+			r = result['result']
+			if (r['r'] !== null) {
+				mouseorig = (r['r'] + r['g'] + r['b']) / 3;
+			} else {
+				mouseorig = r['set'];
+			}
 			mouseset = mouseorig;
 		}
 	});
