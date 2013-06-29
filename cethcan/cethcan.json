@@ -22,5 +22,15 @@
 		{ "addr": 257, "name": "door.left",  "values": [ "open", "closed" ] },
 		{ "addr": 258, "name": "door.light", "values": [ "triggered", "normal" ] },
 		{ "addr": 259, "name": "door.lock",  "values": [ "open", "closed" ] }
-	]
+	],
+	"espnet": [ {
+		"interface": "eth0",
+		"devices": [
+			{ "baseaddr":  2, "name": "dmx.lounge_buero_ecke" },
+			{ "baseaddr":  7, "name": "dmx.lounge_midwest" },
+			{ "baseaddr": 12, "name": "dmx.lounge_buehne_links" },
+			{ "baseaddr": 17, "name": "dmx.lounge_traverse" },
+			{ "baseaddr": 22, "name": "dmx.lounge_decke" }
+		]
+	} ]
 }

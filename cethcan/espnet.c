@@ -99,15 +99,15 @@ void espnet_sink_writer(evutil_socket_t fd, short event, void *arg)
 	};
 
 	for (struct espnet_device *d = sink->devs; d; d = d->next) {
-		if (d->baseaddr >= 510)
+		if (d->baseaddr >= 511)
 			continue;
-		packet.dmx[d->baseaddr] = d->r;
-		packet.dmx[d->baseaddr + 1] = d->g;
-		packet.dmx[d->baseaddr + 2] = d->b;
+		packet.dmx[d->baseaddr - 1] = d->r;
+		packet.dmx[d->baseaddr + 0] = d->g;
+		packet.dmx[d->baseaddr + 1] = d->b;
 	}
 
 	if (sendto(sink->fd, &packet, sizeof(packet), 0,
-		(struct sockaddr *)&addr, sizeof(addr) != sizeof(packet)))
+		(struct sockaddr *)&addr, sizeof(addr)) != sizeof(packet))
 		lprintf("ESPnet[%s#%d] send failed: %s",
 			sink->ifname, sink->universe, strerror(errno));
 
@@ -184,8 +184,8 @@ int espnet_init_conf(json_t *config)
 		lprintf("ESPnet config must have a string 'interface' key");
 		return 1;
 	}
-	if (!json_is_object(json_object_get(config, "devices"))) {
-		lprintf("ESPnet config must have an object 'device' key");
+	if (!json_is_array(json_object_get(config, "devices"))) {
+		lprintf("ESPnet config must have an array 'devices' key");
 		return 1;
 	}
 
@@ -218,11 +218,14 @@ int espnet_init_conf(json_t *config)
 	struct ip_mreqn mrn = { .imr_ifindex = ifindex };
 	struct sockaddr_in addr = { .sin_family = AF_INET,
 		.sin_port = htons(ESPNET_PORT) };
+	int mone = -1;
 
 	sink->fd = socket(AF_INET, SOCK_DGRAM, 0);
 	if (sink->fd < 0
 		|| setsockopt(sink->fd, SOL_IP, IP_MULTICAST_IF,
 				&mrn, sizeof(mrn))
+		|| setsockopt(sink->fd, SOL_SOCKET, SO_BROADCAST,
+				&mone, sizeof(mone))
 		|| setsockopt(sink->fd, SOL_SOCKET, SO_BINDTODEVICE,
 				iface, strlen(iface) + 1)
 		|| bind(sink->fd, (struct sockaddr *)&addr, sizeof(addr))) {
@@ -254,6 +257,8 @@ int espnet_init_conf(json_t *config)
 	sink->u->json = espnet_json_handler;
 
 	sink->writer = event_new(ev_base, -1, 0, espnet_sink_writer, sink);
+	struct timeval tvs = { .tv_sec = 0, .tv_usec = ESPNET_TIMER };
+	event_add(sink->writer, &tvs);
 
 	*psinks = sink;
 	psinks = &sink->next;
