@@ -172,7 +172,7 @@
      inkscape:cx="420"
      inkscape:cy="240"
      inkscape:document-units="px"
-     inkscape:current-layer="layer12"
+     inkscape:current-layer="layer1"
      showgrid="true"
      width="1052.36px"
      inkscape:window-width="1600"
@@ -4427,7 +4427,7 @@
        sodipodi:ry="8"
        d="m 240.5,55.5 a 8,8 0 1 1 -16,0 8,8 0 1 1 16,0 z">
       <title
-         id="title4703">dmx.lounge_traverse</title>
+         id="title4703">dmx.lounge_traverse=rgb</title>
     </path>
     <path
        style="fill:#000000;fill-opacity:1;stroke:#b0b0b0;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline"
