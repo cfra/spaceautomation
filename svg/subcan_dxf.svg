@@ -169,10 +169,10 @@
      inkscape:pageopacity="1"
      inkscape:pageshadow="2"
      inkscape:zoom="1.3229167"
-     inkscape:cx="419.24409"
-     inkscape:cy="209.76378"
+     inkscape:cx="420"
+     inkscape:cy="240"
      inkscape:document-units="px"
-     inkscape:current-layer="layer10"
+     inkscape:current-layer="layer12"
      showgrid="true"
      width="1052.36px"
      inkscape:window-width="1600"
@@ -1127,9 +1127,10 @@
        inkscape:connector-curvature="0" />
     <path
        style="font-size:9px;font-style:normal;font-weight:400;fill:none;stroke:#ffffff;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;font-family:Sans Serif"
-       d="m 755.24891,168.24954 c 0,22.71696 0,45.43394 0,68.1509"
+       d="m 755.24891,168.24954 0,9.25046"
        id="polyline7331"
-       inkscape:connector-curvature="0" />
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
     <path
        style="font-size:9px;font-style:normal;font-weight:400;fill:none;stroke:#ffffff;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;font-family:Sans Serif"
        d="m 750.48812,237.76391 c 0,67.2457 0,134.49141 0,201.7371"
@@ -1285,6 +1286,12 @@
        d="m 218.8816,287.45112 c 0,-3.04509 0,-6.09018 0,-9.13527"
        id="polyline7393"
        inkscape:connector-curvature="0" />
+    <path
+       style="font-size:9px;font-style:normal;font-weight:400;fill:none;stroke:#ffffff;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline;font-family:Sans Serif"
+       d="m 755.24891,225.5 0,10.90044"
+       id="polyline7331-3"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
   </g>
   <g
      inkscape:groupmode="layer"
