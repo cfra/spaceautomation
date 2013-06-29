@@ -17,6 +17,8 @@
    inkscape:version="0.48.4 r9939"
    sodipodi:docname="subcan_dxf.svg"
    onload="doload()">
+  <title
+     id="title3860">sub:Licht</title>
   <script
      xlink:href="jquery-1.10.1.min.js"
      id="script9227" />
@@ -209,7 +211,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title>sub:Licht</dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
