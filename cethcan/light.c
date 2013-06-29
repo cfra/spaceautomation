@@ -6,6 +6,7 @@ struct value {
 };
 
 struct light {
+	struct light *next;
 	struct can_user *u;
 
 	char *name;
@@ -13,6 +14,38 @@ struct light {
 
 	struct value set, actual;
 };
+
+static struct light *lights = NULL, **plights = &lights;
+
+struct light *light_find(const char *name)
+{
+	struct light *l;
+	for (l = lights; l; l = l->next)
+		if (!strcmp(l->name, name))
+			break;
+	return l;
+}
+
+int light_set(struct light *l, unsigned value)
+{
+	struct can_message msg;
+	msg.daddr = CANA_LIGHT_F(0, l->logical_addr);
+	msg.dlc = 1;
+	msg.bytes[0] = value;
+	can_broadcast(l->u, &msg);
+
+	return 0;
+}
+
+unsigned light_getset(struct light *l)
+{
+	return l->set.val;
+}
+
+unsigned light_getact(struct light *l)
+{
+	return l->actual.val;
+}
 
 static void light_json_handler(void *arg, json_t *json, enum json_subtype type)
 {
@@ -89,5 +122,8 @@ int light_init_conf(json_t *config)
 
 	l->u = can_register_alloc(l, light_can_handler, "light[%s]", l->name);
 	l->u->json = light_json_handler;
+
+	*plights = l;
+	plights = &l->next;
 	return 0;
 }
