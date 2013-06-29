@@ -295,6 +295,25 @@ function update_elements(json) {
 			console.log("unknown dynamic content type", node.localName);
 		}
 	}
+
+	nodes = simple_xpath('//*[contains(svg:title, "=")]');
+	for (i in nodes) {
+		var node = nodes[i];
+		var spec = node.getElementsByTagName('title')[0].firstChild.nodeValue.split('=', 2);
+		var dataelem = json[spec[0]];
+
+		if (dataelem === null)
+			continue;
+
+		if (node.localName == "path") {
+			node.style.fill = "rgb("
+				+ dataelem['r'] + ", "
+				+ dataelem['g'] + ", "
+				+ dataelem['b'] + ")";
+		} else {
+			console.log("unknown dynamic content type", node.localName);
+		}
+	}
 }
 
 var xhr = new XMLHttpRequest();

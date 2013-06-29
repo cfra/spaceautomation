@@ -4302,6 +4302,90 @@
          id="tspan3984-1-0-8-6-2-3-8"
          x="734.5"
          y="709.86218">ist</tspan></text>
+    <path
+       style="fill:#000000;fill-opacity:1;stroke:#b0b0b0;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 228.5,49.5 -6,0 c -2,0 -6,2 -6,6 0,4 4,6 6,6 l 6,0"
+       id="path4564"
+       inkscape:connector-curvature="0"
+       transform="translate(0,572.36218)"
+       sodipodi:nodetypes="ccccc" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#000000;fill-opacity:1;stroke:#b0b0b0;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+       id="path4562"
+       sodipodi:cx="232.5"
+       sodipodi:cy="55.5"
+       sodipodi:rx="8"
+       sodipodi:ry="8"
+       d="m 240.5,55.5 c 0,4.418278 -3.58172,8 -8,8 -4.41828,0 -8,-3.581722 -8,-8 0,-4.418278 3.58172,-8 8,-8 4.41828,0 8,3.581722 8,8 z"
+       transform="translate(0,572.36218)">
+      <title
+         id="title4697">dmx.lounge_decke=rgb</title>
+    </path>
+    <path
+       transform="translate(-12,700.36218)"
+       sodipodi:type="arc"
+       style="fill:#000000;fill-opacity:1;stroke:#b0b0b0;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;display:inline"
+       id="path4562-6"
+       sodipodi:cx="232.5"
+       sodipodi:cy="55.5"
+       sodipodi:rx="8"
+       sodipodi:ry="8"
+       d="m 240.5,55.5 c 0,4.418278 -3.58172,8 -8,8 -4.41828,0 -8,-3.581722 -8,-8 0,-4.418278 3.58172,-8 8,-8 4.41828,0 8,3.581722 8,8 z">
+      <title
+         id="title4703">dmx.lounge_traverse</title>
+    </path>
+    <path
+       style="fill:#000000;fill-opacity:1;stroke:#b0b0b0;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline"
+       d="m 220.5,797.86218 6,0 c 2,0 6,2 6,6 0,4 -4,6 -6,6 l -6,0"
+       id="path4564-3"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccc" />
+    <path
+       transform="translate(-16,748.36218)"
+       sodipodi:type="arc"
+       style="fill:#000000;fill-opacity:1;stroke:#b0b0b0;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;display:inline"
+       id="path4562-0"
+       sodipodi:cx="232.5"
+       sodipodi:cy="55.5"
+       sodipodi:rx="8"
+       sodipodi:ry="8"
+       d="m 240.5,55.5 c 0,4.418278 -3.58172,8 -8,8 -4.41828,0 -8,-3.581722 -8,-8 0,-4.418278 3.58172,-8 8,-8 4.41828,0 8,3.581722 8,8 z">
+      <title
+         id="title4701">dmx.lounge_buehne_links=rgb</title>
+    </path>
+    <path
+       transform="translate(144,572.36218)"
+       sodipodi:type="arc"
+       style="opacity:0.93000033999999998;fill:#000000;fill-opacity:1;stroke:#b0b0b0;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;display:inline"
+       id="path4562-6-4"
+       sodipodi:cx="232.5"
+       sodipodi:cy="55.5"
+       sodipodi:rx="8"
+       sodipodi:ry="8"
+       d="m 240.5,55.5 c 0,4.418278 -3.58172,8 -8,8 -4.41828,0 -8,-3.581722 -8,-8 0,-4.418278 3.58172,-8 8,-8 4.41828,0 8,3.581722 8,8 z">
+      <title
+         id="title4695">dmx.lounge_buero_ecke=rgb</title>
+    </path>
+    <path
+       style="fill:#000000;fill-opacity:1;stroke:#b0b0b0;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline"
+       d="m 370.5,799.86218 0,-6 c 0,-2 2,-6 6,-6 4,0 6,4 6,6 l 0,6"
+       id="path4564-3-2"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccc" />
+    <path
+       transform="translate(144,748.36218)"
+       sodipodi:type="arc"
+       style="opacity:0.93000034;fill:#000000;fill-opacity:1;stroke:#b0b0b0;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;display:inline"
+       id="path4562-6-4-6"
+       sodipodi:cx="232.5"
+       sodipodi:cy="55.5"
+       sodipodi:rx="8"
+       sodipodi:ry="8"
+       d="m 240.5,55.5 c 0,4.418278 -3.58172,8 -8,8 -4.41828,0 -8,-3.581722 -8,-8 0,-4.418278 3.58172,-8 8,-8 4.41828,0 8,3.581722 8,8 z">
+      <title
+         id="title4695-7">dmx.lounge_midwest=rgb</title>
+    </path>
   </g>
   <g
      inkscape:groupmode="layer"
@@ -4411,7 +4495,7 @@
        style="fill:#000000;fill-opacity:0.00392157;stroke:none"
        id="evt_dali.lounge_buero"
        width="112"
-       height="120"
+       height="88"
        x="224.5"
        y="79.5"
        inkscape:label="#rect3791" />
@@ -4419,7 +4503,7 @@
        style="fill:#000000;fill-opacity:0.00392157;stroke:none"
        id="evt_dali.lounge_buehne"
        width="112"
-       height="120"
+       height="88"
        x="104.5"
        y="79.5"
        inkscape:label="#rect3791" />
@@ -4430,6 +4514,46 @@
        height="88"
        x="520.5"
        y="175.5"
+       inkscape:label="#rect3791" />
+    <rect
+       style="fill:#000000;fill-opacity:0.00392157;stroke:none"
+       id="evt_dali.lounge_buehne-0"
+       width="104"
+       height="40"
+       x="168.5"
+       y="167.5"
+       inkscape:label="#rect3791" />
+    <rect
+       style="fill:#000000;fill-opacity:0.00392157;stroke:none"
+       id="evt_dali.lounge_buehne-0-7"
+       width="104"
+       height="56"
+       x="168.5"
+       y="207.5"
+       inkscape:label="#rect3791" />
+    <rect
+       style="fill:#000000;fill-opacity:0.00392157;stroke:none"
+       id="evt_dali.lounge_buehne-0-71"
+       width="104"
+       height="56"
+       x="168.5"
+       y="23.5"
+       inkscape:label="#rect3791" />
+    <rect
+       style="fill:#000000;fill-opacity:0.00392157;stroke:none"
+       id="evt_dali.lounge_buehne-0-71-8"
+       width="104"
+       height="56"
+       x="320.5"
+       y="23.5"
+       inkscape:label="#rect3791" />
+    <rect
+       style="fill:#000000;fill-opacity:0.00392157;stroke:none"
+       id="evt_dali.lounge_midwest"
+       width="104"
+       height="56"
+       x="320.5"
+       y="199.5"
        inkscape:label="#rect3791" />
   </g>
 </svg>
