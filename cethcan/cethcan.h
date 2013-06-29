@@ -80,6 +80,12 @@ extern void rpc_perform(struct evbuffer *request,
 	void (*response_handler)(void *arg, struct evbuffer *data),
 	void *handler_arg);
 
+struct light;
+extern struct light *light_find(const char *name);
+extern int light_set(struct light *l, unsigned value);
+extern unsigned light_getset(struct light *l);
+extern unsigned light_getact(struct light *l);
+
 extern void json_bump_longpoll(void);
 
 extern int socan_init(json_t *config);
