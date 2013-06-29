@@ -86,12 +86,20 @@ extern int light_set(struct light *l, unsigned value);
 extern unsigned light_getset(struct light *l);
 extern unsigned light_getact(struct light *l);
 
+struct espnet_device;
+struct espnet_device *espnet_find(const char *name);
+extern int espnet_set(struct espnet_device *dev,
+		unsigned r, unsigned g, unsigned b);
+extern void espnet_get(struct espnet_device *dev,
+		unsigned *r, unsigned *g, unsigned *b);
+
 extern void json_bump_longpoll(void);
 
 extern int socan_init(json_t *config);
 extern int ether_init(json_t *config);
 extern int light_init_conf(json_t *config);
 extern int bean_init_conf(json_t *config);
+extern int espnet_init_conf(json_t *config);
 extern void http_init(void);
 
 #endif /* _CETHCAN_H */
