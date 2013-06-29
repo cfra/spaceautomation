@@ -49,7 +49,7 @@ function on_evt_click(node) {
 	r = result['result']
 	console.log('light_get', r);
 	var set;
-	if (r['r'] !== null) {
+	if (r['r']) {
 		set = (r['r'] + r['g'] + r['b']) / 3;
 	} else {
 		set = r['set'];
@@ -113,7 +113,7 @@ function on_evt_mousedown(node, evt) {
 		},
 		success: function(result) {
 			r = result['result']
-			if (r['r'] !== null) {
+			if (r['r']) {
 				mouseorig = (r['r'] + r['g'] + r['b']) / 3;
 			} else {
 				mouseorig = r['set'];
@@ -149,11 +149,11 @@ function on_evt_mousemove(node, evt) {
 
 	if (offs < 0) {
 		var pos = (-offs - deadzone) / dimzone;
-		console.log("cvo", offs, "+dim", pos);
+		// console.log("cvo", offs, "+dim", pos);
 		mouseset = mouseorig + pos * (255 - mouseorig);
 	} else {
 		var pos = (offs - deadzone) / dimzone;
-		console.log("cvo", offs, "-dim", pos);
+		// console.log("cvo", offs, "-dim", pos);
 		mouseset = mouseorig * (1.0 - pos);
 	}
 	mouseset = Math.floor(mouseset);
