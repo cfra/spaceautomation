@@ -34,7 +34,7 @@ function immediate_update(id, setval) {
 function on_evt_click(node) {
 	var id = node.id.substring(4);
 	var now = new Date().getTime();
-	if (now - mousestart > 100)
+	if (now - mousestart > 200)
 		return;
 
 	console.log("clicked", id);
