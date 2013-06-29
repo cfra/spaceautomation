@@ -168,11 +168,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="1"
      inkscape:pageshadow="2"
-     inkscape:zoom="4.04"
-     inkscape:cx="581.91966"
-     inkscape:cy="264.65307"
+     inkscape:zoom="1.3229167"
+     inkscape:cx="420"
+     inkscape:cy="240"
      inkscape:document-units="px"
-     inkscape:current-layer="layer1"
+     inkscape:current-layer="layer12"
      showgrid="true"
      width="1052.36px"
      inkscape:window-width="1600"
@@ -180,7 +180,7 @@
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
-     inkscape:snap-global="false"
+     inkscape:snap-global="true"
      inkscape:object-nodes="true"
      inkscape:object-paths="true"
      inkscape:snap-bbox="false">
@@ -213,6 +213,18 @@
       </cc:Work>
     </rdf:RDF>
   </metadata>
+  <g
+     inkscape:groupmode="layer"
+     id="layer12"
+     inkscape:label="bg">
+    <rect
+       style="fill:#262628;fill-opacity:1;stroke:none"
+       id="rect9252"
+       width="840"
+       height="480"
+       x="0.5"
+       y="-0.5" />
+  </g>
   <g
      inkscape:groupmode="layer"
      id="layer10"
