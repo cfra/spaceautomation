@@ -8,14 +8,14 @@
 		{ "addr": 1091, "name": "dali.lounge_bar" },
 		{ "addr": 1092, "name": "dali.lounge_durchreiche" },
 
-		{ "addr": 1093, "name": "dali.hacklab.east.outer" },
+		{ "addr": 1093, "name": "dali.flur" },
+
+		{ "addr": 1099, "name": "dali.hacklab.east.outer" },
 		{ "addr": 1094, "name": "dali.hacklab.east.middle" },
 		{ "addr": 1095, "name": "dali.hacklab.west.inner" },
 		{ "addr": 1096, "name": "dali.hacklab.west.middle" },
 		{ "addr": 1097, "name": "dali.hacklab.east.inner" },
-		{ "addr": 1098, "name": "dali.hacklab.west.outer" },
-
-		{ "addr": 1099, "name": "dali.flur" }
+		{ "addr": 1098, "name": "dali.hacklab.west.outer" }
 	],
 	"beans": [
 		{ "addr": 256, "name": "door.right", "values": [ "open", "closed" ] },
