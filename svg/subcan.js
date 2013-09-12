@@ -13,6 +13,57 @@ function simple_xpath(expr) {
 	return nodes;
 }
 
+var picktgt = null;
+var picktimer = null;
+
+function picker_end() {
+	node = simple_xpath('//*[contains(svg:title, "'+picktgt+'=")]')[0];
+	node.style.strokeWidth = 1.0;
+	node.style.stroke = '#b0b0b0';
+
+	picktgt = null;
+	var picker = document.getElementById('picker');
+	picker.style.visibility = 'hidden';
+}
+
+function picker_begin(target) {
+	if (picktgt) {
+		window.clearTimeout(picktimer);
+		picker_end();
+	}
+
+	node = simple_xpath('//*[contains(svg:title, "'+target+'=")]')[0];
+	node.style.strokeWidth = 3.0;
+	node.style.stroke = '#ff7700';
+
+	picktgt = target;
+	var picker = document.getElementById('picker');
+	picker.style.visibility = 'visible';
+	picktimer = window.setTimeout(picker_end, 2500);
+}
+
+function picker_refresh() {
+	window.clearTimeout(picktimer);
+	picktimer = window.setTimeout(picker_end, 2500);
+}
+
+function on_picker(hex, hsv, rgb) {
+	console.log('pick', picktgt, rgb);
+	picker_refresh();
+
+	$.jsonRPC.request('light_set', {
+		params: [id, [rgb.r, rgb.g, rgb.b]],
+		error: function(result) {
+			console.log('light_set RGB error', result);
+		},
+		success: function(result) {
+			// console.log('light_set ', id, ' => ', mouseset, ' OK: ', result['result']);
+			// immediate_update(id, mouseset);
+		}
+	});
+}
+
+
 var mousesel = null;
 var mouseset = null;
 var mouseorig = 0;
@@ -100,6 +151,13 @@ function on_mouse_timer() {
 
 function on_evt_mousedown(node, evt) {
 	var id = node.id.substring(4);
+
+	if (id.substr(0,3) == 'dmx') {
+		console.log('dmx click', id);
+		picker_begin(id);
+		return false;
+	}
+
 	// console.log('node', node, 'y', evt.clientY);
 	mousestart = new Date().getTime();
 	node.style.fill = "#0088ff";
@@ -172,12 +230,14 @@ function on_evt_mousemove(node, evt) {
 
 function on_evt_mouseup(node, evt) {
 	// console.log('--- up ---');
-	window.setTimeout((function() {
-		var sel = mousesel;
-		return function() {
-			sel.style.fillOpacity = 0.0;
-		}
-	})(), 250);
+	if (mousesel) {
+		window.setTimeout((function() {
+			var sel = mousesel;
+			return function() {
+				sel.style.fillOpacity = 0.0;
+			}
+		})(), 250);
+	}
 	mousesel = null;
 
 	evt.cancelBubble = true;
