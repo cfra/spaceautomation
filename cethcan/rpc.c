@@ -35,9 +35,11 @@ static int rpc_light_set(void *apparg, json_t *json_params, json_t **result)
 		unsigned r, g, b;
 		json_t *val = json_array_get(json_params, 1);
 
-		if (json_is_integer(val))
-			r = g = b = json_integer_value(val);
-		else if (json_is_array(val)) {
+		if (json_is_integer(val)) {
+			r = json_integer_value(val);
+			g = (r * 180) / 255;
+			b = (r * 144) / 255;
+		} else if (json_is_array(val)) {
 			if (json_unpack(val, "[iii]", &r, &g, &b)) {
 				emsg = "failed to parse value array";
 				goto out_err;
