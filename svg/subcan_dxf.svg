@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
+<?xml-stylesheet href="themes.css" type="text/css"?>
+
 <svg
    xmlns:dc="http://purl.org/dc/elements/1.1/"
    xmlns:cc="http://creativecommons.org/ns#"
@@ -10,7 +12,7 @@
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="840"
+   width="960"
    height="480"
    id="svg2"
    version="1.1"
@@ -25,6 +27,9 @@
   <script
      xlink:href="jquery.jsonrpc.js"
      id="script4" />
+  <script
+     xlink:href="colorpicker.js"
+     id="script5" />
   <script
      xlink:href="subcan.js"
      id="script6" />
@@ -222,7 +227,7 @@
     <rect
        style="fill:#262628;fill-opacity:1;stroke:none"
        id="rect9252"
-       width="840"
+       width="960"
        height="480"
        x="0.5"
        y="-0.5" />
@@ -4413,7 +4418,7 @@
        sodipodi:cy="55.5"
        sodipodi:rx="8"
        sodipodi:ry="8"
-       d="m 240.5,55.5 c 0,4.418278 -3.58172,8 -8,8 -4.41828,0 -8,-3.581722 -8,-8 0,-4.418278 3.58172,-8 8,-8 4.41828,0 8,3.581722 8,8 z"
+       d="m 240.5,55.5 a 8,8 0 1 1 -16,0 8,8 0 1 1 16,0 z"
        transform="translate(0,572.36218)">
       <title
          id="title4697">dmx.lounge_decke=rgb</title>
@@ -4427,7 +4432,7 @@
        sodipodi:cy="55.5"
        sodipodi:rx="8"
        sodipodi:ry="8"
-       d="m 240.5,55.5 c 0,4.418278 -3.58172,8 -8,8 -4.41828,0 -8,-3.581722 -8,-8 0,-4.418278 3.58172,-8 8,-8 4.41828,0 8,3.581722 8,8 z">
+       d="m 240.5,55.5 a 8,8 0 1 1 -16,0 8,8 0 1 1 16,0 z">
       <title
          id="title4703">dmx.lounge_traverse=rgb</title>
     </path>
@@ -4446,7 +4451,7 @@
        sodipodi:cy="55.5"
        sodipodi:rx="8"
        sodipodi:ry="8"
-       d="m 240.5,55.5 c 0,4.418278 -3.58172,8 -8,8 -4.41828,0 -8,-3.581722 -8,-8 0,-4.418278 3.58172,-8 8,-8 4.41828,0 8,3.581722 8,8 z">
+       d="m 240.5,55.5 a 8,8 0 1 1 -16,0 8,8 0 1 1 16,0 z">
       <title
          id="title4701">dmx.lounge_buehne_links=rgb</title>
     </path>
@@ -4459,7 +4464,7 @@
        sodipodi:cy="55.5"
        sodipodi:rx="8"
        sodipodi:ry="8"
-       d="m 240.5,55.5 c 0,4.418278 -3.58172,8 -8,8 -4.41828,0 -8,-3.581722 -8,-8 0,-4.418278 3.58172,-8 8,-8 4.41828,0 8,3.581722 8,8 z">
+       d="m 240.5,55.5 a 8,8 0 1 1 -16,0 8,8 0 1 1 16,0 z">
       <title
          id="title4695">dmx.lounge_buero_ecke=rgb</title>
     </path>
@@ -4478,7 +4483,7 @@
        sodipodi:cy="55.5"
        sodipodi:rx="8"
        sodipodi:ry="8"
-       d="m 240.5,55.5 c 0,4.418278 -3.58172,8 -8,8 -4.41828,0 -8,-3.581722 -8,-8 0,-4.418278 3.58172,-8 8,-8 4.41828,0 8,3.581722 8,8 z">
+       d="m 240.5,55.5 a 8,8 0 1 1 -16,0 8,8 0 1 1 16,0 z">
       <title
          id="title4695-7">dmx.lounge_midwest=rgb</title>
     </path>
@@ -4652,5 +4657,28 @@
        x="320.5"
        y="199.5"
        inkscape:label="#rect3791" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer8"
+     inkscape:label="picker">
+    <foreignObject class="node" x="680" y="240" width="290" height="240" id="picker" style="visibility:hidden;">
+      <body xmlns="http://www.w3.org/1999/xhtml">
+        <div id="color-picker" class="cp-normal" />
+        <script type="text/javascript">
+          ColorPicker(document.getElementById('color-picker'), on_picker);
+        </script>
+      </body>
+    </foreignObject>
+<!--    <rect
+       style="fill:#ff7af6;fill-opacity:1;stroke:none"
+       id="picker"
+       width="200"
+       height="220"
+       x="760"
+       y="260"
+       inkscape:label="#rect3860">
+
+    </rect> -->
   </g>
 </svg>
