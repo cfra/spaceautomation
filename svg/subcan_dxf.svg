@@ -4666,7 +4666,7 @@
       <body xmlns="http://www.w3.org/1999/xhtml">
         <div id="color-picker" class="cp-normal" />
         <script type="text/javascript">
-          ColorPicker(document.getElementById('color-picker'), on_picker);
+          picker = ColorPicker(document.getElementById('color-picker'), on_picker);
         </script>
       </body>
     </foreignObject>

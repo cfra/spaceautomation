@@ -1,3 +1,6 @@
+/* JSON object global ref */
+var data = null;
+
 function simple_xpath(expr) {
 	var root = document.documentElement;
 	var iter = document.evaluate(expr, root,
@@ -15,6 +18,7 @@ function simple_xpath(expr) {
 
 var picktgt = null;
 var picktimer = null;
+var picker;
 
 function picker_end() {
 	node = simple_xpath('//*[contains(svg:title, "'+picktgt+'=")]')[0];
@@ -22,8 +26,8 @@ function picker_end() {
 	node.style.stroke = '#b0b0b0';
 
 	picktgt = null;
-	var picker = document.getElementById('picker');
-	picker.style.visibility = 'hidden';
+	var pickelem = document.getElementById('picker');
+	pickelem.style.visibility = 'hidden';
 }
 
 function picker_begin(target) {
@@ -37,14 +41,16 @@ function picker_begin(target) {
 	node.style.stroke = '#ff7700';
 
 	picktgt = target;
-	var picker = document.getElementById('picker');
-	picker.style.visibility = 'visible';
-	picktimer = window.setTimeout(picker_end, 2500);
+	picker.setRgb(data[picktgt]);
+
+	var pickelem = document.getElementById('picker');
+	pickelem.style.visibility = 'visible';
+	picktimer = window.setTimeout(picker_end, 5000);
 }
 
 function picker_refresh() {
 	window.clearTimeout(picktimer);
-	picktimer = window.setTimeout(picker_end, 2500);
+	picktimer = window.setTimeout(picker_end, 5000);
 }
 
 function on_picker(hex, hsv, rgb) {
@@ -52,7 +58,7 @@ function on_picker(hex, hsv, rgb) {
 	picker_refresh();
 
 	$.jsonRPC.request('light_set', {
-		params: [id, [rgb.r, rgb.g, rgb.b]],
+		params: [picktgt, [rgb.r, rgb.g, rgb.b]],
 		error: function(result) {
 			console.log('light_set RGB error', result);
 		},
