@@ -59,6 +59,8 @@ struct espnet_device *espnet_find(const char *name)
 
 int espnet_set(struct espnet_device *dev, unsigned r, unsigned g, unsigned b)
 {
+	bool bump = dev->r != r || dev->g != g || dev->b != b;
+		
 	dev->r = r;
 	dev->g = g;
 	dev->b = b;
@@ -70,6 +72,8 @@ int espnet_set(struct espnet_device *dev, unsigned r, unsigned g, unsigned b)
 		event_add(dev->sink->writer, &tvs);
 		dev->sink->writer_resched = true;
 	}
+	if (bump)
+		json_bump_longpoll();
 	return 0;
 }
 
