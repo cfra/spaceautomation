@@ -394,14 +394,27 @@ function update_elements(json) {
 }
 
 var xhr = new XMLHttpRequest();
+var xhrtimeout = null;
+var xhrlastref = null;
+
 function xhr_handler() {
 	if (xhr.readyState === 4) {
 		if (xhr.status === 200) {
-			data = JSON.parse(xhr.responseText);
+			if (xhr.responseText != '') {
+				rdata = JSON.parse(xhr.responseText);
+				data = rdata['data'];
+				xhrlastref = rdata['ref'];
+			}
+			console.log('xhr OK', xhrlastref);
+
+			timer(0);
+
 /*			for (attr in data) {
 				console.log('xhr attr', attr);
 			} */
 			update_elements(data);
+		} else if (xhr.status === 0) {
+			/* request abort, ignore */
 		} else {
 			console.log('xhr: something went wrong', xhr.status, xhr.statusText);
 		}
@@ -409,11 +422,36 @@ function xhr_handler() {
 }
 xhr.onreadystatechange = xhr_handler;
 
-function timer() {
-	xhr.open('GET', '/');
+function ISOTS() {
+	function pad(n){return n<10 ? '0'+n : n}
+	var d = new Date();
+	return d.getUTCFullYear()+'-'
+		+ pad(d.getUTCMonth()+1)+'-'
+		+ pad(d.getUTCDate())+'T'
+		+ pad(d.getUTCHours())+':'
+		+ pad(d.getUTCMinutes())+':'
+		+ pad(d.getUTCSeconds())+'Z';
+}
+
+function timer(expired) {
+	var dbgtext = document.getElementById('dbgtextreal');
+
+	if (expired) {
+		xhr.abort();
+	} else {
+		window.clearTimeout(xhrtimeout);
+	}
+
+	if (xhrlastref === null) {
+		xhr.open('GET', '/longpoll');
+		dbgtext.textContent = ISOTS() + ' (none)';
+	} else {
+		xhr.open('GET', '/longpoll?' + xhrlastref);
+		dbgtext.textContent = ISOTS() + ' ' + xhrlastref;
+	}
 	// xmlhttp.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 	xhr.send(null);
-	window.setTimeout(timer, 2000);
+	xhrtimeout = window.setTimeout(timer, 45000, 1);
 }
 
 function doload() {
