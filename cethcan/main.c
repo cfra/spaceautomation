@@ -77,6 +77,8 @@ int main(int argc, char **argv)
 
 	http_init();
 
+	json_decref(config);
+
 	event_base_loop(ev_base, 0);
 	return 0;
 }

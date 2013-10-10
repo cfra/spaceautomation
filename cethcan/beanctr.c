@@ -83,7 +83,9 @@ int bean_init_conf(json_t *config)
 	b->name = strdup(json_string_value(json_object_get(config, "name")));
 	b->logical_addr = json_integer_value(json_object_get(config, "addr"));
 	b->vals[0] = json_array_get(vals, 0);
+	json_incref(b->vals[0]);
 	b->vals[1] = json_array_get(vals, 1);
+	json_incref(b->vals[1]);
 
 	b->u = can_register_alloc(b, bean_can_handler, "bean[%s]", b->name);
 	b->u->json = bean_json_handler;

@@ -109,8 +109,10 @@ void rpc_perform(struct evbuffer *request,
 
 	/* TODO: asynchronous calls */
 	char *output = jsonrpc_handler(NULL, data, len, method_table);
-	if (output)
+	if (output) {
 		evbuffer_add(outbuf, output, strlen(output));
+		free(output);
+	}
 	response_handler(handler_arg, outbuf);
 	evbuffer_free(outbuf);
 }
