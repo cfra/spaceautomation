@@ -8,6 +8,7 @@ int main(int argc, char **argv)
 	const char *cfgfile = "cethcan.json";
 	json_error_t je;
 	json_t *config;
+	struct sigaction sa;
 
 	do {
 		optch = getopt(argc, argv, "c:");
@@ -78,6 +79,13 @@ int main(int argc, char **argv)
 	http_init();
 
 	json_decref(config);
+
+	memset(&sa, 0, sizeof(sa));
+	sa.sa_handler = SIG_IGN;
+	sigaction(SIGPIPE, &sa, NULL);
+	sigaction(SIGHUP, &sa, NULL);
+	sigaction(SIGUSR1, &sa, NULL);
+	sigaction(SIGUSR2, &sa, NULL);
 
 	event_base_loop(ev_base, 0);
 	return 0;

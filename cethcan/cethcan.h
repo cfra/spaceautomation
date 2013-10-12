@@ -18,6 +18,7 @@
 #include <sys/uio.h>
 #include <fcntl.h>
 #include <time.h>
+#include <signal.h>
 #include <assert.h>
 
 #include <event2/event.h>
