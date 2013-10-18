@@ -5,8 +5,11 @@
 #include <event2/buffer.h>
 #include <openssl/sha.h>
 
+#define LONGPOLLMAXWAIT		75 /* sec */
+
 static struct evhttp *evhttp;
 static struct can_user *cuhttp;
+static struct event *evlongpollclear;
 
 static int evb_json_add(const char *data, size_t size, void *arg)
 {
@@ -107,6 +110,7 @@ static void http_json_bump(struct evhttp_request *req, void *arg)
 struct longpoll {
 	struct longpoll *next;
 	struct evhttp_request *req;
+	time_t added;
 };
 static struct longpoll *longpolls = NULL, **plongpoll = &longpolls;
 static size_t longpoll_count = 0;
@@ -132,6 +136,7 @@ static void http_json_longpoll(struct evhttp_request *req, void *arg)
 
 		lp = calloc(sizeof(*lp), 1);
 		lp->req = req;
+		lp->added = time(NULL);
 		*plongpoll = lp;
 		plongpoll = &lp->next;
 		longpoll_count++;
@@ -194,12 +199,29 @@ void json_bump_longpoll(void)
 	longpoll_count = 0;
 }
 
+static void longpoll_clear(evutil_socket_t foo, short flags, void *arg)
+{
+	struct longpoll *lp;
+	time_t now = time(NULL);
+
+	while (longpolls && longpolls->added < now - LONGPOLLMAXWAIT) {
+		lp = longpolls;
+		longpolls = lp->next;
+		longpoll_count--;
+
+		evhttp_send_reply_end(lp->req);
+		free(lp);
+	}
+}
+
 static void http_can_handler(void *arg, struct can_message *msg)
 {
 }
 
 void http_init(void)
 {
+	struct timeval tv;
+
 	cuhttp = can_register_alloc(NULL, http_can_handler, "http");
 
 	evhttp = evhttp_new(ev_base);
@@ -212,4 +234,10 @@ void http_init(void)
 	evhttp_bind_socket(evhttp, "127.0.0.1", 34999);
 
 	longpoll_updatedata();
+
+	tv.tv_sec = 30;
+	tv.tv_usec = 0;
+	
+	evlongpollclear = event_new(ev_base, -1, EV_PERSIST, longpoll_clear, NULL);
+	event_add(evlongpollclear, &tv);
 }
