@@ -15,7 +15,15 @@
 		{ "addr": 1095, "name": "dali.hacklab.west.inner" },
 		{ "addr": 1096, "name": "dali.hacklab.west.middle" },
 		{ "addr": 1097, "name": "dali.hacklab.east.inner" },
-		{ "addr": 1098, "name": "dali.hacklab.west.outer" }
+		{ "addr": 1098, "name": "dali.hacklab.west.outer" },
+		{ "name": "dali.hacklab", "slaves": [
+			"dali.hacklab.east.outer",
+			"dali.hacklab.east.middle",
+			"dali.hacklab.west.inner",
+			"dali.hacklab.west.middle",
+			"dali.hacklab.east.inner",
+			"dali.hacklab.west.outer"
+		]}
 	],
 	"beans": [
 		{ "addr": 256, "name": "toilet.lock", "values": [ "open", "closed" ] },
