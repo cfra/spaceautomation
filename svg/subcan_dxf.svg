@@ -175,8 +175,8 @@
      borderopacity="1.0"
      inkscape:pageopacity="1"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.3229167"
-     inkscape:cx="420"
+     inkscape:zoom="1.3"
+     inkscape:cx="480"
      inkscape:cy="240"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
@@ -231,6 +231,66 @@
        height="480"
        x="0.5"
        y="-0.5" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer14"
+     inkscape:label="toilet.lock=open"
+     style="display:none">
+    <rect
+       style="fill:#6be56b;fill-opacity:1;stroke:none;display:inline"
+       id="rect4638"
+       width="47.586224"
+       height="50.368931"
+       x="709.59534"
+       y="389.13208" />
+    <text
+       xml:space="preserve"
+       style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:100%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:sans;-inkscape-font-specification:sans"
+       x="733.3819"
+       y="412.82153"
+       id="text4658"
+       sodipodi:linespacing="100%"><tspan
+         sodipodi:role="line"
+         x="733.3819"
+         y="412.82153"
+         id="tspan4662">WC frei</tspan><tspan
+         sodipodi:role="line"
+         x="733.3819"
+         y="422.82153"
+         id="tspan4668">WC free</tspan></text>
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer15"
+     inkscape:label="toilet.lock=closed"
+     style="display:none">
+    <rect
+       style="fill:#e13737;fill-opacity:1;stroke:none;display:inline"
+       id="rect4638-3"
+       width="47.586224"
+       height="50.368931"
+       x="709.59534"
+       y="389.13208" />
+    <text
+       xml:space="preserve"
+       style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:100%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:sans;-inkscape-font-specification:sans"
+       x="733.56665"
+       y="406.98746"
+       id="text4658-1"
+       sodipodi:linespacing="100%"><tspan
+         sodipodi:role="line"
+         x="733.56665"
+         y="406.98746"
+         id="tspan4662-0">WC</tspan><tspan
+         sodipodi:role="line"
+         x="733.56665"
+         y="416.98746"
+         id="tspan4700">besetzt</tspan><tspan
+         sodipodi:role="line"
+         x="733.56665"
+         y="426.98746"
+         id="tspan4668-9">occupied</tspan></text>
   </g>
   <g
      inkscape:groupmode="layer"
@@ -1004,9 +1064,10 @@
        inkscape:connector-curvature="0" />
     <path
        style="font-size:9px;font-style:normal;font-weight:400;fill:none;stroke:#ffffff;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;font-family:Sans Serif"
-       d="m 709.59531,439.50101 c 13.63094,0 27.26187,0 40.89281,0"
+       d="m 709.59531,439.50101 c 13.63094,0 33.95531,0 47.58625,0 l 0,-50.36334 -6.90808,-0.006"
        id="polyline7219"
-       inkscape:connector-curvature="0" />
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cccc" />
     <path
        style="font-size:9px;font-style:normal;font-weight:400;fill:none;stroke:#ffffff;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;font-family:Sans Serif"
        d="m 216.49552,439.50101 c 1.70434,0 3.40868,0 5.11302,0"
@@ -1140,9 +1201,10 @@
        sodipodi:nodetypes="cc" />
     <path
        style="font-size:9px;font-style:normal;font-weight:400;fill:none;stroke:#ffffff;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;font-family:Sans Serif"
-       d="m 750.48812,237.76391 c 0,67.2457 0,134.49141 0,201.7371"
+       d="m 750.48812,237.76391 c 0,67.2457 0,84.12247 0,151.36816"
        id="polyline7333"
-       inkscape:connector-curvature="0" />
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
     <path
        style="font-size:9px;font-style:normal;font-weight:400;fill:none;stroke:#ffffff;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;font-family:Sans Serif"
        d="m 696.55143,168.24954 0,-1.36347"

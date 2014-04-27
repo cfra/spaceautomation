@@ -45,12 +45,26 @@ function picker_begin(target) {
 
 	var pickelem = document.getElementById('picker');
 	pickelem.style.visibility = 'visible';
-	picktimer = window.setTimeout(picker_end, 5000);
+	picktimer = window.setTimeout(picker_end, 30000);
 }
 
 function picker_refresh() {
 	window.clearTimeout(picktimer);
-	picktimer = window.setTimeout(picker_end, 5000);
+	picktimer = window.setTimeout(picker_end, 30000);
+}
+
+function rgb2dmx(r, g, b) {
+	r = Math.floor((Math.pow(4.0, r / 255.0) - 1) / 3 * 255);
+	g = Math.floor((Math.pow(4.0, g / 255.0) - 1) / 3 * 180);
+	b = Math.floor((Math.pow(4.0, b / 255.0) - 1) / 3 * 144);
+	return [r,g,b];
+}
+function dmx2rgb(r, g, b) {
+	l4 = 255.0 / Math.log(4.0);
+	r = Math.floor(Math.log(r / 255.0 * 3 + 1) * l4);
+	g = Math.floor(Math.log(g / 180.0 * 3 + 1) * l4);
+	b = Math.floor(Math.log(g / 144.0 * 3 + 1) * l4);
+	return [r,g,b];
 }
 
 function on_picker(hex, hsv, rgb) {
@@ -58,7 +72,7 @@ function on_picker(hex, hsv, rgb) {
 	picker_refresh();
 
 	$.jsonRPC.request('light_set', {
-		params: [picktgt, [rgb.r, rgb.g, rgb.b]],
+		params: [picktgt, rgb2dmx(rgb.r, rgb.g, rgb.b)],
 		error: function(result) {
 			console.log('light_set RGB error', result);
 		},
@@ -383,10 +397,11 @@ function update_elements(json) {
 			continue;
 
 		if (node.localName == "path") {
+			rgb = dmx2rgb(dataelem['r'], dataelem['g'], dataelem['b']);
 			node.style.fill = "rgb("
-				+ dataelem['r'] + ", "
-				+ dataelem['g'] + ", "
-				+ dataelem['b'] + ")";
+				+ rgb[0] + ", "
+				+ rgb[1] + ", "
+				+ rgb[2] + ")";
 		} else {
 			console.log("unknown dynamic content type", node.localName);
 		}

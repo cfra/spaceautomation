@@ -27,6 +27,8 @@
 
 #include "protocol.h"
 
+extern int verbosity;
+
 #define lprintf(...) do { \
 	struct timeval tv; struct tm tm; char tvbuf[64]; \
 	gettimeofday(&tv, NULL); localtime_r(&tv.tv_sec, &tm); \

@@ -2,6 +2,8 @@
 
 struct event_base *ev_base;
 
+int verbosity = 0;
+
 int main(int argc, char **argv)
 {
 	int optch = 0;
@@ -11,10 +13,13 @@ int main(int argc, char **argv)
 	struct sigaction sa;
 
 	do {
-		optch = getopt(argc, argv, "c:");
+		optch = getopt(argc, argv, "vc:");
 		switch (optch) {
 		case 'c':
 			cfgfile = optarg;
+			break;
+		case 'v':
+			verbosity++;
 			break;
 		case -1:
 			break;

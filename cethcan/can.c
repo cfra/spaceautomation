@@ -40,10 +40,12 @@ void can_broadcast(struct can_user *origin, struct can_message *msg)
 		lprintf("invalid CAN message (DLC = %zu)", msg->dlc);
 		return;
 	}
-	for (size_t i = 0; i < msg->dlc; i++)
-		sprintf(buf + 3 * i, " %02x", msg->bytes[i]);
-	lprintf("%s: %08x (%zu)%s", origin->name,
-		(unsigned)msg->daddr, msg->dlc, buf);
+	if (verbosity >= 1) {
+		for (size_t i = 0; i < msg->dlc; i++)
+			sprintf(buf + 3 * i, " %02x", msg->bytes[i]);
+		lprintf("%s: %08x (%zu)%s", origin->name,
+			(unsigned)msg->daddr, msg->dlc, buf);
+	}
 
 	for (u = users; u; u = u->next)
 		if (u != origin)

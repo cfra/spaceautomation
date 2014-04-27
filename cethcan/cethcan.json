@@ -18,9 +18,9 @@
 		{ "addr": 1098, "name": "dali.hacklab.west.outer" }
 	],
 	"beans": [
-		{ "addr": 256, "name": "door.right", "values": [ "open", "closed" ] },
+		{ "addr": 256, "name": "toilet.lock", "values": [ "open", "closed" ] },
 		{ "addr": 257, "name": "door.left",  "values": [ "open", "closed" ] },
-		{ "addr": 258, "name": "door.light", "values": [ "triggered", "normal" ] },
+		{ "addr": 258, "name": "door.right", "values": [ "open", "closed" ] },
 		{ "addr": 259, "name": "door.lock",  "values": [ "open", "closed" ] }
 	],
 	"espnet": [ {

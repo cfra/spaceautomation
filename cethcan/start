@@ -1,0 +1,19 @@
+#!/bin/sh
+
+sleep 1
+
+/sbin/modprobe c_can_platform
+/sbin/modprobe can-raw
+
+sleep 1
+
+/sbin/ip link set can0 down
+/sbin/ip link set can0 type can tq 1500 prop-seg 2 phase-seg1 1 phase-seg2 2 sjw 1
+# /sbin/ip link set can0 type can bitrate 111111
+/sbin/ip link set can0 type can restart-ms 100 listen-only off berr-reporting on
+/sbin/ip link set can0 promisc on up
+
+sleep 1
+
+exec /root/spaceautomation/cethcan/cethcan
+
