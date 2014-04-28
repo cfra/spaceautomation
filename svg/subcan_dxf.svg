@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
-<?xml-stylesheet href="themes.css" type="text/css"?><svg
-   xmlns:xhtml="http://www.w3.org/1999/xhtml"
+<?xml-stylesheet href="themes.css" type="text/css"?>
+
+<svg
    xmlns:dc="http://purl.org/dc/elements/1.1/"
    xmlns:cc="http://creativecommons.org/ns#"
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
@@ -234,8 +235,7 @@
   <g
      inkscape:groupmode="layer"
      id="layer12"
-     inkscape:label="bg"
-     style="display:inline">
+     inkscape:label="bg">
     <rect
        style="fill:#262628;fill-opacity:1;stroke:none"
        id="rect9252"
@@ -1377,8 +1377,7 @@
   <g
      inkscape:groupmode="layer"
      id="layer13"
-     inkscape:label="debug"
-     style="display:inline">
+     inkscape:label="debug">
     <text
        xml:space="preserve"
        style="font-size:8px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#444444;fill-opacity:1;stroke:none;font-family:Monospace;-inkscape-font-specification:Monospace"
@@ -1395,7 +1394,7 @@
      inkscape:groupmode="layer"
      id="layer11"
      inkscape:label="guides"
-     style="opacity:0.14903846;display:inline"
+     style="opacity:0.14903846"
      sodipodi:insensitive="true">
     <rect
        style="fill:#9d9d9d;fill-opacity:1;stroke:none"
@@ -3445,7 +3444,6 @@
      inkscape:groupmode="layer"
      id="layer9"
      inkscape:label="events"
-     style="display:inline"
      sodipodi:insensitive="true">
     <rect
        style="fill:#000000;fill-opacity:0.00392157;stroke:none"
@@ -3539,24 +3537,14 @@
   <g
      inkscape:groupmode="layer"
      id="layer8"
-     inkscape:label="picker"
-     style="display:inline">
-    <foreignObject
-       class="node"
-       x="680"
-       y="240"
-       width="290"
-       height="240"
-       id="picker">
-      <xhtml:body>
-        <xhtml:div
-           id="color-picker"
-           class="cp-normal" />
-        <xhtml:script
-           type="text/javascript">
+     inkscape:label="picker">
+    <foreignObject class="node" x="680" y="240" width="290" height="240" id="picker" style="visibility:hidden;">
+      <body xmlns="http://www.w3.org/1999/xhtml">
+        <div id="color-picker" class="cp-normal" />
+        <script type="text/javascript">
           picker = ColorPicker(document.getElementById('color-picker'), on_picker);
-        </xhtml:script>
-      </xhtml:body>
+        </script>
+      </body>
     </foreignObject>
     <!--    <rect
        style="fill:#ff7af6;fill-opacity:1;stroke:none"
