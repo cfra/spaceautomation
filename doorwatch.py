@@ -24,7 +24,10 @@ if __name__ == '__main__':
             if last_ref is not None:
                 req_url += '?' + last_ref
             r = urllib2.urlopen(req_url, timeout=120)
-            data = json.loads(r.read())
+            buf = r.read()
+            if not buf.strip():
+                continue
+            data = json.loads(buf)
         except Exception:
             sys.excepthook(*sys.exc_info())
             last_ref = None
