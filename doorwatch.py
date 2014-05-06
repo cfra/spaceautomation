@@ -12,7 +12,7 @@ import time
 
 if __name__ == '__main__':
     workdir = os.path.realpath(os.path.dirname(__file__))
-    was_closed = False # Only react to changes
+    was_closed = None # Only react to changes
     last_ref = None
 
     while True:
@@ -37,9 +37,10 @@ if __name__ == '__main__':
         data = data['data']
 
         closed = data['door.left']['value']
-        if was_closed and not closed:
-            print "Door has been opened!"
-            subprocess.call(['paplay', '--volume=32661', os.path.join(workdir, 'doorwatch.wav')])
-        if not was_closed and closed:
-            print "Door has been closed."
+        if was_closed is not None:
+            if was_closed and not closed:
+                print "Door has been opened!"
+                subprocess.call(['paplay', '--volume=32661', os.path.join(workdir, 'doorwatch.wav')])
+            if not was_closed and closed:
+                print "Door has been closed."
         was_closed = closed
