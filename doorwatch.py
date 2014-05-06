@@ -34,6 +34,8 @@ if __name__ == '__main__':
                 r.close()
 
         last_ref = data['ref']
+        data = data['data']
+
         closed = data['door.left']['value']
         if was_closed and not closed:
             print "Door has been opened!"
