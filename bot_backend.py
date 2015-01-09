@@ -34,10 +34,18 @@ def tmp_set(url, value):
 def on_pubmsg(self, c, e):
     message = e.arguments[0]
 
-    light_command_prefix = '!light'
-    if message.startswith(light_command_prefix):
-        nick = e.source.nick
-        on_light_command(self, nick, message[len(light_command_prefix) + 1:])
+    nick = e.source.nick
+    commands = {
+        '!light' : on_light_command,
+    }
+
+    if message.startswith('!help'):
+        self.connection.privmsg(self.channel, "The following commands are currently known: %s" % ', '.join(sorted(commands.keys())))
+    else:
+        for key in commands:
+            if message.startswith(key):
+                commands[key](self, nick, message[len(key) + 1:])
+		break
 
 def on_light_command(self, nick, commandline):
     tokens = commandline.split(' ')
