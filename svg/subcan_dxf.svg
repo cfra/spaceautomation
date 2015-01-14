@@ -16,7 +16,7 @@
    height="480"
    id="svg2"
    version="1.1"
-   inkscape:version="0.48.4 r9939"
+   inkscape:version="0.48.5 r10040"
    sodipodi:docname="subcan_dxf.svg"
    onload="doload()">
   <title
@@ -1490,119 +1490,61 @@
     <text
        xml:space="preserve"
        style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#fff766;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
-       x="456.75461"
-       y="899.80389"
+       x="456.5"
+       y="907.86218"
        id="text3982"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          id="tspan3984"
-         x="456.75461"
-         y="899.80389">soll</tspan></text>
-    <text
-       xml:space="preserve"
-       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#fff766;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
-       x="456.5"
-       y="915.86218"
-       id="text3982-9"
-       sodipodi:linespacing="125%"><tspan
-         sodipodi:role="line"
-         id="tspan3984-7"
          x="456.5"
-         y="915.86218">ist</tspan></text>
+         y="907.86218">soll</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#fff766;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
-       x="416.5"
-       y="899.86218"
+       x="416.24539"
+       y="907.92047"
        id="dali.lounge_bar_set"
        sodipodi:linespacing="125%"
        inkscape:label="dali.lounge_bar=%set"><tspan
          sodipodi:role="line"
          id="tspan3984-1"
-         x="416.5"
-         y="899.86218">x</tspan></text>
-    <text
-       xml:space="preserve"
-       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#fff766;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
-       x="416.5"
-       y="915.86218"
-       id="dali.lounge_bar_actual"
-       sodipodi:linespacing="125%"
-       inkscape:label="dali.lounge_bar=%actual"><tspan
-         sodipodi:role="line"
-         id="tspan3984-3"
-         x="416.5"
-         y="915.86218">x</tspan></text>
+         x="416.24539"
+         y="907.92047">x</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#fff766;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
-       x="376.5"
-       y="899.86218"
+       x="376.24539"
+       y="907.92047"
        id="dali.lounge_durchreiche_set"
        sodipodi:linespacing="125%"
        inkscape:label="dali.lounge_durchreiche=%set"><tspan
          sodipodi:role="line"
          id="tspan3984-1-8"
-         x="376.5"
-         y="899.86218">x</tspan></text>
-    <text
-       xml:space="preserve"
-       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#fff766;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
-       x="376.5"
-       y="915.86218"
-       id="dali.lounge_durchreiche_actual"
-       sodipodi:linespacing="125%"
-       inkscape:label="dali.lounge_durchreiche=%actual"><tspan
-         sodipodi:role="line"
-         id="tspan3984-3-1"
-         x="376.5"
-         y="915.86218">x</tspan></text>
-    <text
-       xml:space="preserve"
-       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#fff766;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
-       x="280.75458"
-       y="707.80389"
-       id="text3982-2"
-       sodipodi:linespacing="125%"><tspan
-         sodipodi:role="line"
-         id="tspan3984-34"
-         x="280.75458"
-         y="707.80389">soll</tspan></text>
+         x="376.24539"
+         y="907.92047">x</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#fff766;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
        x="280.5"
-       y="723.86218"
-       id="text3982-9-5"
+       y="715.86218"
+       id="text3982-2"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
-         id="tspan3984-7-1"
+         id="tspan3984-34"
          x="280.5"
-         y="723.86218">ist</tspan></text>
+         y="715.86218">soll</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#fff766;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
-       x="240.5"
-       y="707.86218"
+       x="240.24542"
+       y="715.92047"
        id="dali.lounge_buero_set"
        sodipodi:linespacing="125%"
        inkscape:label="dali.lounge_buero=%set"><tspan
          sodipodi:role="line"
          id="tspan3984-1-9"
-         x="240.5"
-         y="707.86218">x</tspan></text>
-    <text
-       xml:space="preserve"
-       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#fff766;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
-       x="240.5"
-       y="723.86218"
-       id="dali.lounge_buero_actual"
-       sodipodi:linespacing="125%"
-       inkscape:label="dali.lounge_buero=%actual"><tspan
-         sodipodi:role="line"
-         id="tspan3984-3-6"
-         x="240.5"
-         y="723.86218">x</tspan></text>
+         x="240.24542"
+         y="715.92047">x</tspan></text>
     <g
        id="g4030-8-7"
        transform="translate(-64,-183.99999)"
@@ -1872,27 +1814,15 @@
     <text
        xml:space="preserve"
        style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#fff766;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
-       x="200.5"
-       y="707.86218"
+       x="200.24542"
+       y="715.92047"
        id="dali.lounge_buehne_set"
        sodipodi:linespacing="125%"
        inkscape:label="dali.lounge_buehne=%set"><tspan
          sodipodi:role="line"
          id="tspan3984-1-8-9"
-         x="200.5"
-         y="707.86218">x</tspan></text>
-    <text
-       xml:space="preserve"
-       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#fff766;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
-       x="200.5"
-       y="723.86218"
-       id="dali.lounge_buehne_actual"
-       sodipodi:linespacing="125%"
-       inkscape:label="dali.lounge_buehne=%actual"><tspan
-         sodipodi:role="line"
-         id="tspan3984-3-1-2"
-         x="200.5"
-         y="723.86218">x</tspan></text>
+         x="200.24542"
+         y="715.92047">x</tspan></text>
     <g
        id="g4030-8-7-9"
        transform="matrix(0,1,-1,0,1476.3622,491.36218)"
@@ -2163,26 +2093,14 @@
        xml:space="preserve"
        style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#fff766;fill-opacity:1;stroke:none;display:inline;font-family:Sans;-inkscape-font-specification:Sans"
        x="616.5"
-       y="779.86218"
+       y="787.86218"
        id="dali.lounge_buero_set-4"
        sodipodi:linespacing="125%"
        inkscape:label="dali.flur=%set"><tspan
          sodipodi:role="line"
          id="tspan3984-1-9-6"
          x="616.5"
-         y="779.86218">x</tspan></text>
-    <text
-       xml:space="preserve"
-       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#fff766;fill-opacity:1;stroke:none;display:inline;font-family:Sans;-inkscape-font-specification:Sans"
-       x="616.5"
-       y="795.86218"
-       id="dali.lounge_buero_actual-3"
-       sodipodi:linespacing="125%"
-       inkscape:label="dali.flur=%actual"><tspan
-         sodipodi:role="line"
-         id="tspan3984-3-6-9"
-         x="616.5"
-         y="795.86218">x</tspan></text>
+         y="787.86218">x</tspan></text>
     <g
        id="g4030-8-7-0"
        transform="translate(-80,-184)"
@@ -3334,27 +3252,15 @@
     <text
        xml:space="preserve"
        style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#fff766;fill-opacity:1;stroke:none;display:inline;font-family:Sans;-inkscape-font-specification:Sans"
-       x="700.67572"
-       y="655.992"
+       x="700.5"
+       y="663.86218"
        id="dali.lounge_buero_set-4-5"
        sodipodi:linespacing="125%"
        inkscape:label="dali.hacklab=%set"><tspan
          sodipodi:role="line"
          id="tspan3984-1-9-6-5"
-         x="700.67572"
-         y="655.992">x</tspan></text>
-    <text
-       xml:space="preserve"
-       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#fff766;fill-opacity:1;stroke:none;display:inline;font-family:Sans;-inkscape-font-specification:Sans"
-       x="700.67572"
-       y="671.992"
-       id="dali.lounge_buero_actual-3-7"
-       sodipodi:linespacing="125%"
-       inkscape:label="dali.hacklab=%actual"><tspan
-         sodipodi:role="line"
-         id="tspan3984-3-6-9-9"
-         x="700.67572"
-         y="671.992">x</tspan></text>
+         x="700.5"
+         y="663.86218">x</tspan></text>
   </g>
   <g
      inkscape:groupmode="layer"
