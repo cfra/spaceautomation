@@ -19,6 +19,8 @@ while True:
     for sensor in onewire.sensors():
         try:
             message += "%s %f %d\n" % (prefix + sensor, onewire.sensor(sensor).temperature, time.time())
+        except onewire.SensorNotPresent, e:
+            print >>sys.stderr, 'SensorNotPresent:', str(e)
         except Exception:
             print >>sys.stderr, "On %s: Could not retrieve temperature for '%s':" % (
                 time.strftime('%a, %d %b %Y %T %z'), sensor)

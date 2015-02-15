@@ -3,11 +3,18 @@ Onewire interface using w1 sysfs
 """
 
 import os
+import errno
 import re
 import sys
 import time
 
 class OnewireException(Exception):
+	pass
+class SensorNotPresent(OnewireException):
+	pass
+class ReadFailed(OnewireException):
+	pass
+class OutOfRange(OnewireException):
 	pass
 
 _sensors = {}
@@ -25,12 +32,25 @@ class SensorFacade(object):
 		self._addr = addr
 		self._name = name
 
-	def get_temperature(self):
+	def _path(self):
 		addr = self._addr.replace('.', '-').lower()
-		path = '/sys/devices/w1_bus_master1/{0}/w1_slave'.format(addr)
+		return '/sys/devices/w1_bus_master1/{0}/w1_slave'.format(addr)
+
+	def get_temperature(self):
+		path = self._path()
+
+		try:	os.stat(path)
+		except OSError, ose:
+			if ose.errno == errno.ENOENT:
+				raise SensorNotPresent, path
+			else:
+				raise
 
 		with open(path, 'r') as w1_file:
 			w1_data = w1_file.read()
+
+		if w1_data.strip() == '':
+			raise ReadFailed, path
 
 		match = re.search(r'\st=(\d+)', w1_data)
 		temp = float(match.group(1)) / 1000
@@ -38,20 +58,19 @@ class SensorFacade(object):
 
 	@property
 	def temperature(self):
-		for i in range(1,3):
+		for i in range(2, 0,-1):
 			try:
 				rv = self.get_temperature()
-			except Exception:
+				if rv > 65 or rv < -25:
+					raise OutOfRange, (self._path(), rv)
+				return rv
+			except SensorNotPresent:
+				raise
+			except Exception, e:
+				if i == 1:
+					raise
 				sys.excepthook(*sys.exc_info())
 				time.sleep(0.5)
-				continue
-
-			if rv > 65:
-				continue
-			if rv < -25:
-				continue
-			return rv
-		raise OnewireException("Bus error for %s" % self._name)
 
 def sensor(name):
 	if name not in _sensors:
