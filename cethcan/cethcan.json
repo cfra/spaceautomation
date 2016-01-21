@@ -24,6 +24,8 @@
 			"dali.hacklab.east.inner",
 			"dali.hacklab.west.outer"
 		]}
+		{ "addr": 1100, "name": "dali.flur.wc" },
+		{ "addr": 1151, "name": "dali.werkstatt.doppel" },
 	],
 	"beans": [
 		{ "addr": 256, "name": "toilet.lock", "values": [ "open", "closed" ] },

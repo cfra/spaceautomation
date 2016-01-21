@@ -7,6 +7,7 @@ import errno
 import re
 import sys
 import time
+import random
 
 class OnewireException(Exception):
 	pass
@@ -31,6 +32,9 @@ class SensorFacade(object):
 	def __init__(self, addr, name):
 		self._addr = addr
 		self._name = name
+		self._cached = None
+		self._cachets = None
+		self._backoff = None
 
 	def _path(self):
 		addr = self._addr.replace('.', '-').lower()
@@ -58,19 +62,34 @@ class SensorFacade(object):
 
 	@property
 	def temperature(self):
-		for i in range(2, 0,-1):
-			try:
-				rv = self.get_temperature()
-				if rv > 65 or rv < -25:
-					raise OutOfRange, (self._path(), rv)
-				return rv
-			except SensorNotPresent:
-				raise
-			except Exception, e:
-				if i == 1:
-					raise
-				sys.excepthook(*sys.exc_info())
-				time.sleep(0.5)
+		if self._cachets > time.time() - 50:
+			return self._cached
+		if self._backoff > time.time():
+			if self._cachets > time.time() - 250:
+				return self._cached
+			return None
+
+		try:
+			rv = self.get_temperature()
+			if rv > 65 or rv < -25:
+				raise OutOfRange, (self._path(), rv)
+			self._cached = rv
+			self._cachets = time.time()
+			self._backoff = None
+			print '\033[32m', self._name, 'read', self._cached, '\033[m'
+			return self._cached
+		except SensorNotPresent:
+			self._backoff = time.time() + 2 + random.expovariate(1./3.) * 2
+			print '\033[31m', self._name, 'SensorNotPresent back-off', self._backoff - time.time(), '\033[m'
+			if self._cachets > time.time() - 250:
+				return self._cached
+			raise
+		except OutOfRange:
+			self._backoff = time.time() + 15 + random.expovariate(1./4.) * 10
+			print '\033[33m', self._name, 'OutOfRange back-off', self._backoff - time.time(), '\033[m'
+			if self._cachets > time.time() - 250:
+				return self._cached
+			raise
 
 def sensor(name):
 	if name not in _sensors:
