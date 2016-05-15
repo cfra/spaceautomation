@@ -33,8 +33,8 @@
 		{ "addr": 258, "name": "door.right", "values": [ "open", "closed" ] },
 		{ "addr": 259, "name": "door.lock",  "values": [ "open", "closed" ] }
 	],
-	"espnet": [ {
-		"interface": "eth0",
+	"ttydmx": [ {
+		"ttydev": "ttyS2",
 		"devices": [
 			{ "baseaddr":  2, "name": "dmx.lounge_buero_ecke" },
 			{ "baseaddr":  7, "name": "dmx.lounge_midwest" },

@@ -81,6 +81,13 @@ int main(int argc, char **argv)
 			return 1;
 	}
 
+	json_t *dmxcfg = json_object_get(config, "ttydmx");
+	for (size_t i = 0; i < json_array_size(dmxcfg); i++) {
+		json_t *c = json_array_get(dmxcfg, i);
+		if (ttydmx_init_conf(c))
+			return 1;
+	}
+
 	http_init();
 
 	json_decref(config);
