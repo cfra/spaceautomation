@@ -13,6 +13,7 @@ static int rpc_light_set(void *apparg, json_t *json_params, json_t **result)
 {
 	struct light *l;
 	struct espnet_device *esp;
+	struct ttydmx_device *dmx;
 	const char *name = json_string_value(json_array_get(json_params, 0));
 	const char *emsg;
 
@@ -31,7 +32,8 @@ static int rpc_light_set(void *apparg, json_t *json_params, json_t **result)
 	}
 
 	esp = espnet_find(name);
-	if (esp) {
+	dmx = ttydmx_find(name);
+	if (esp || dmx) {
 		unsigned r, g, b;
 		json_t *val = json_array_get(json_params, 1);
 
@@ -49,7 +51,10 @@ static int rpc_light_set(void *apparg, json_t *json_params, json_t **result)
 			goto out_err;
 		}
 
-		*result = json_boolean(!espnet_set(esp, r, g, b));
+		if (dmx)
+			*result = json_boolean(!ttydmx_set(dmx, r, g, b));
+		else if (esp)
+			*result = json_boolean(!espnet_set(esp, r, g, b));
 		return 0;
 	}
 
@@ -64,6 +69,7 @@ static int rpc_light_get(void *apparg, json_t *json_params, json_t **result)
 {
 	struct light *l;
 	struct espnet_device *esp;
+	struct ttydmx_device *dmx;
 	const char *name = json_string_value(json_array_get(json_params, 0));
 	unsigned set, actual;
 
@@ -81,6 +87,16 @@ static int rpc_light_get(void *apparg, json_t *json_params, json_t **result)
 	if (esp) {
 		unsigned r, g, b;
 		espnet_get(esp, &r, &g, &b);
+
+		*result = json_pack("{s:i,s:i,s:i}",
+				"r", r, "g", g, "b", b);
+		return 0;
+	}
+
+	dmx = ttydmx_find(name);
+	if (dmx) {
+		unsigned r, g, b;
+		ttydmx_get(dmx, &r, &g, &b);
 
 		*result = json_pack("{s:i,s:i,s:i}",
 				"r", r, "g", g, "b", b);

@@ -96,6 +96,13 @@ extern int espnet_set(struct espnet_device *dev,
 extern void espnet_get(struct espnet_device *dev,
 		unsigned *r, unsigned *g, unsigned *b);
 
+struct ttydmx_device;
+struct ttydmx_device *ttydmx_find(const char *name);
+extern int ttydmx_set(struct ttydmx_device *dev,
+		unsigned r, unsigned g, unsigned b);
+extern void ttydmx_get(struct ttydmx_device *dev,
+		unsigned *r, unsigned *g, unsigned *b);
+
 extern void json_bump_longpoll(void);
 
 extern int socan_init(json_t *config);
