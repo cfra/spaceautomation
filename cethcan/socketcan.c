@@ -11,7 +11,7 @@
 #ifndef CANFD_MAX_DLEN
 #define CANFD_MAX_DLEN 64
 #endif
-#ifndef CAN_RAW_FD_FRAMES
+#if !(defined(CAN_RAW_FD_FRAMES) || defined(CANFD_MTU))
 #define CAN_RAW_FD_FRAMES 5
 struct canfd_frame {
 	canid_t	can_id;	/* 32 bit CAN_ID + EFF/RTR/ERR flags */
