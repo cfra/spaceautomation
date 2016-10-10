@@ -160,6 +160,7 @@ static void *ttydmx_thread(void *arg)
 		write(sink->fd, data ? data->data : &dummy,
 				data ? data->len : 1);
 		tcdrain(sink->fd);
+		usleep(10000);
 	}
 	return NULL;
 }
