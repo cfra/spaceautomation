@@ -76,6 +76,33 @@ int ttydmx_set(struct ttydmx_device *dev, unsigned r, unsigned g, unsigned b)
 	return 0;
 }
 
+static void ttydmx_osc_set(void *arg, struct osc_element *e)
+{
+	struct ttydmx_device *dev = arg;
+	unsigned r,g,b;
+
+	if (!e || !e->next || !e->next->next)
+		return;
+
+	if (e->type == OSC_INT32
+	    && e->next->type == OSC_INT32
+	    && e->next->next->type == OSC_INT32) {
+		r = ((struct osc_int32*)e)->value;
+		g = ((struct osc_int32*)e->next)->value;
+		b = ((struct osc_int32*)e->next->next)->value;
+	} else if (e->type == OSC_FLOAT32
+	    && e->next->type == OSC_FLOAT32
+	    && e->next->next->type == OSC_FLOAT32) {
+		r = 255 * ((struct osc_float32*)e)->value;
+		g = 255 * ((struct osc_float32*)e->next)->value;
+		b = 255 * ((struct osc_float32*)e->next->next)->value;
+	} else {
+		return;
+	}
+
+	ttydmx_set(dev, r, g, b);
+}
+
 void ttydmx_get(struct ttydmx_device *dev,
 		unsigned *r, unsigned *g, unsigned *b)
 {
@@ -137,6 +164,12 @@ static struct ttydmx_device *ttydmx_add_dev(struct ttydmx_sink *sink,
 
 	if (d->baseaddr + 4 > sink->maxaddr)
 		sink->maxaddr = d->baseaddr + 4;
+
+	char buf[1024];
+	snprintf(buf, sizeof(buf), "/dmx/%s/%s/value", sink->ttydev, d->name);
+	lprintf("Adding dmx osc endpoint %s", buf);
+	osc_server_add_method(osc_server, buf, ttydmx_osc_set, d);
+
 	return d;
 }
 
@@ -255,6 +288,7 @@ int ttydmx_init_conf(json_t *config)
 			free(sink);
 			return 1;
 		}
+
 		*devp = dev;
 		devp = &dev->next;
 	}

@@ -25,6 +25,10 @@
 #include <event2/buffer.h>
 #include <jansson.h>
 
+#include <cosc/cosc.h>
+#include <cosc/oscserver.h>
+#include <cosc/oscparser.h>
+
 #include "protocol.h"
 
 extern int verbosity;
@@ -112,5 +116,8 @@ extern int bean_init_conf(json_t *config);
 extern int espnet_init_conf(json_t *config);
 extern int ttydmx_init_conf(json_t *config);
 extern void http_init(void);
+
+extern struct osc_server *osc_server;
+extern void osc_init(void);
 
 #endif /* _CETHCAN_H */

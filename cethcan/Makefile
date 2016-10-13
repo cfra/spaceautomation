@@ -3,10 +3,11 @@ love: cethcan
 
 PKGS="libevent jansson"
 L_CFLAGS=-g -O0 -pthread -Wall -Wextra -Wshadow -pedantic -Wno-unused-parameter -Wno-format -std=gnu11 `pkg-config --cflags $(PKGS)` $(CFLAGS)
-L_LDFLAGS=-g -pthread `pkg-config --libs $(PKGS)` -lcrypto $(LDFLAGS)
+L_LDFLAGS=-g -pthread `pkg-config --libs $(PKGS)` -lcrypto -lcosc $(LDFLAGS)
 
 cethcan: main.o can.o ether.o light.o beanctr.o \
-		http.o socketcan.o jsonrpc.o rpc.o espnet.o ttydmx.o
+		http.o socketcan.o jsonrpc.o rpc.o espnet.o ttydmx.o \
+		osc.o
 	gcc $(L_LDFLAGS) -o $@ $^
 
 clean:

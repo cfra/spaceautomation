@@ -48,6 +48,26 @@ int light_set(struct light *l, unsigned value)
 	return 0;
 }
 
+static void light_osc_set(void *arg, struct osc_element *e)
+{
+	struct light *l = arg;
+	unsigned value;
+
+	if (!e)
+		return;
+	if (e->type == OSC_INT32)
+		value = ((struct osc_int32*)e)->value;
+	else if (e->type == OSC_FLOAT32)
+		value = 255 * ((struct osc_float32*)e)->value;
+	else
+		return;
+
+	if (value > 255)
+		value = 255;
+
+	light_set(l, value);
+}
+
 unsigned light_getset(struct light *l)
 {
 	if (l->aggregate) {
@@ -196,6 +216,11 @@ int light_init_conf(json_t *config)
 
 	l->u = can_register_alloc(l, light_can_handler, "light[%s]", l->name);
 	l->u->json = light_json_handler;
+
+	char buf[1024];
+	snprintf(buf, sizeof(buf), "/lights/%s/value", l->name);
+	lprintf("Adding light osc endpoint %s", buf);
+	osc_server_add_method(osc_server, buf, light_osc_set, l);
 
 	*plights = l;
 	plights = &l->next;

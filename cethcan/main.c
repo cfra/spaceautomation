@@ -44,6 +44,8 @@ int main(int argc, char **argv)
 
 	ev_base = event_base_new();
 
+	osc_init();
+
 	can_init();
 
 	json_t *ethercfg = json_object_get(config, "ethernet");
