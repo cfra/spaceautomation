@@ -256,6 +256,8 @@ int ttydmx_init_conf(json_t *config)
 	serial.flags &= ~ASYNC_SPD_MASK;
 	serial.flags |= ASYNC_SPD_CUST;
 	serial.custom_divisor = serial.baud_base / 250000;
+	if (!serial.custom_divisor)
+		goto out_setup_err;
 
 	if (ioctl(sink->fd, TIOCSSERIAL, &serial))
 		goto out_setup_err;
