@@ -17,6 +17,11 @@ struct light {
 	struct light **slaves;
 
 	struct value set, actual;
+
+	struct event *holdoff;
+	bool holdoff_pending;
+	bool holdoff_changed;
+	unsigned holdoff_value;
 };
 
 static struct light *lights = NULL, **plights = &lights;
@@ -30,6 +35,31 @@ struct light *light_find(const char *name)
 	return l;
 }
 
+static void light_holdoff_event(int sock, short event, void *arg)
+{
+	struct light *l = arg;
+
+	l->holdoff_pending = false;
+	if (!l->holdoff_changed)
+		return;
+
+	struct can_message msg;
+	msg.daddr = CANA_LIGHT_F(0, l->logical_addr);
+	msg.dlc = 1;
+	msg.bytes[0] = l->holdoff_value;
+	can_broadcast(l->u, &msg);
+
+	l->holdoff_changed = false;
+	if (!l->holdoff)
+		l->holdoff = evtimer_new(ev_base, light_holdoff_event, l);
+
+	struct timeval holdoff_time = {
+		.tv_usec = 40000UL
+	};
+	evtimer_add(l->holdoff, &holdoff_time);
+	l->holdoff_pending = true;
+}
+
 int light_set(struct light *l, unsigned value)
 {
 	if (l->aggregate) {
@@ -39,12 +69,13 @@ int light_set(struct light *l, unsigned value)
 		return ec;
 	}
 
-	struct can_message msg;
-	msg.daddr = CANA_LIGHT_F(0, l->logical_addr);
-	msg.dlc = 1;
-	msg.bytes[0] = value;
-	can_broadcast(l->u, &msg);
+	l->holdoff_changed = true;
+	l->holdoff_value = value;
 
+	if (l->holdoff_pending)
+		return 0;
+
+	light_holdoff_event(0,0,l);
 	return 0;
 }
 
